@@ -2,11 +2,14 @@
 <html>
     <head>
         <script type="text/javascript">
-            alert("This alert box was called with the onload event");
+            function saveName() {
+                localStorage.name = document.getElementById('name').value;
+            }
         </script>
     </head>
     <body>
         <h1>Hello World</h1>
-        <a href='https://stefandimeski.github.io/dnichwebsite/main2.html'>Go to main2</a>
+        <input id='name'></input>
+        <a href='https://stefandimeski.github.io/dnichwebsite/main2.html' onclick='saveName()'>Go to main2</a>
     </body>
 </html>
