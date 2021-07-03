@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <!-- head definitions go here -->
+         <script type="text/javascript">
+            function getText() {
+                document.getElementById('namefield').innerHTML = 'Hello, ' + localStorage.name;
+            }
+        </script>
     </head>
     <body>
-      <h1>Yello World!</h1>
-        <!-- the content goes here -->
+      <h1 id='namefield' onload='getText()'></h1>
     </body>
 </html>
