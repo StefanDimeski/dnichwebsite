@@ -17,67 +17,39 @@
 
          <script type="text/javascript">
             function getText() {
-                document.getElementById('name_field').innerHTML = localStorage.name;
+                document.getElementById('navbarDropdown').innerHTML = localStorage.name;
             }
         </script>
     </head>
     <body onload='getText()'>
-      <!--<nav class="navbar navbar-light" style='background-color: #333333;'>
-            <div class="container-fluid">
+        <nav class="navbar navbar-expand" style='background-color: #333333;'>
+            <div class='container-fluid'>  
                 <div>
                     <a class="navbar-brand" style='color: #49C1CB; font-weight: bold; font-size: 2.0rem;' href="#">Initiativia</a>
                     <button type='button' class='btn btn-primary'>Back</button>
                 </div>
-                <div>
-                    <a href='new_initiative.html'>
-                        <button type="button" class="btn btn-primary" style='background-color: #49C1CB; color: black; border-color: #49C1CB;'>Start a new initiative</button>
-                    </a>
 
-                    <div class="dropdown">
-                        <a id='name_field' class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                            Dropdown link
+                <div>
+
+                    <div class="navbar-nav mr-auto">
+                        <a href='new_initiative.html'>
+                        <button type="button" class="btn btn-primary" style='background-color: #49C1CB; color: black; border-color: #49C1CB;'>Start a new initiative</button>
+                        </a>
+                      <div class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
+                          Dropdown
                         </a>
 
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
+                        <div class="dropdown-menu">
+                          <a class="dropdown-item" href="#">Action</a>
+                          <a class="dropdown-item" href="#">Another action</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                      </div>
                     </div>
                 </div>
             </div>
-        </nav>-->
-
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-          <a class="navbar-brand" href="#">Navbar</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-              <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Dropdown
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="#">Action</a>
-                  <a class="dropdown-item" href="#">Another action</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                </div>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link disabled" href="#">Disabled</a>
-              </li>
-            </ul>
-          </div>
         </nav>
 
         <div class='container'>
@@ -92,10 +64,10 @@
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quis tempus felis. Proin eget tincidunt nibh. Donec elementum sem vitae quam tempor, sed sagittis libero dapibus. Donec sodales tortor nulla, eu egestas felis pellentesque ornare. Sed nibh nunc, pulvinar ut felis vitae, luctus convallis nibh. Etiam id auctor odio. Morbi fermentum imperdiet felis non malesuada. Integer ultrices ornare nulla eu luctus. Suspendisse potenti. </p>
 
                         <a href='#'>
-                        <button type="button" id='name_field' class="btn btn-danger">Join the initiative</button>
+                        <button type="button" class="btn btn-danger">Join the initiative</button>
                         </a>
                         <a href='#'>
-                        <button type="button" id='name_field' class="btn btn-success" >Support the initiative anonymously</button>
+                        <button type="button" class="btn btn-success" >Support the initiative anonymously</button>
                         </a>
                     </div>
                 </div>
@@ -111,10 +83,10 @@
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quis tempus felis. Proin eget tincidunt nibh. Donec elementum sem vitae quam tempor, sed sagittis libero dapibus. Donec sodales tortor nulla, eu egestas felis pellentesque ornare. Sed nibh nunc, pulvinar ut felis vitae, luctus convallis nibh. Etiam id auctor odio. Morbi fermentum imperdiet felis non malesuada. Integer ultrices ornare nulla eu luctus. Suspendisse potenti. </p>
 
                         <a href='#'>
-                            <button type="button" id='name_field' class="btn btn-danger">Join the initiative</button>
+                            <button type="button" class="btn btn-danger">Join the initiative</button>
                         </a>
                         <a href='#'>
-                            <button type="button" id='name_field' class="btn btn-success" >Support the initiative anonymously</button>
+                            <button type="button"class="btn btn-success" >Support the initiative anonymously</button>
                         </a>
                     </div>
                 </div>

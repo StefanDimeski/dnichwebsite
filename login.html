@@ -12,10 +12,35 @@
 
 
         <script type="text/javascript">
-            function saveName() {
-                localStorage.name = document.getElementById('name').value;
+            function showError() {
+                document.getElementById('errormsg').style.height='auto';
+            }
+
+            function showError2() {
+                document.getElementById('errormsg').classList.add('popup');
             }
         </script>
+
+
+        <style>
+            /*.errormessage {transition: height 10s;}*/
+            @keyframes fadeIn {
+                0% {height: 0px;}
+                100% {height: 30px;}
+            }
+
+            .popup {
+                -webkit-animation: fadeIn 2s forwards;
+                animation: fadeIn 0.5s forwards;
+
+                border: 2px solid darkred;
+            }
+
+            .errormessage {
+                height: 0px;
+                overflow: hidden;
+            }
+        </style>
     </head>
 
 
@@ -37,9 +62,10 @@
         <div class='container'>
             <div style='border: 2px solid black;'>
                 <a style='color: #49C1CB; font-weight: bold; font-size: 2.0rem;' href="#">Initiativia</a>
+                <div class='errormessage' id='errormsg'>Your password is wrong!</div>
                 <input type="email" class="form-control" id="email_field" placeholder="E-mail">
                 <input type="password" class="form-control" id="pass_field" placeholder="Password">
-                <a href='main.html'>
+                <a href='#' onclick="showError2()">
                     <button type="button" class="btn btn-primary text-light" style='background-color: #49C1CB; color: black; border-color: #49C1CB;'>Log in</button>
                 </a>
             </div>
