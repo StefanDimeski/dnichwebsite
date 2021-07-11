@@ -15,6 +15,29 @@
             function getText() {
                 document.getElementById('name_field').innerHTML = localStorage.name;
             }
+
+            function picture() {
+                input = document.getElementById('inpFile');
+                img = document.getElementById('previewPic');
+
+                file = input.files[0];
+
+                console.log(file)
+
+                let reader = new FileReader();
+
+                reader.readAsDataURL(file);
+
+                reader.onload = function() {
+                    img.src = reader.result;
+                    img.style.width = '200px';
+                    img.style.height = '100px';
+                };
+
+                reader.onerror = function() {
+                    console.log(reader.error);
+                };
+            }
         </script>
     </head>
 
@@ -46,7 +69,8 @@
                         <input type="email" class="form-control" id="initiative_title_field" placeholder="Describe your initiative">
                     </div>
                     <div class='row'>
-                        <label class="btn btn-primary">+ Add image<input type="file" id="imginp" name="img" accept="image/*" hidden></label>
+                        <img src='' id='previewPic'>
+                        <label class="btn btn-primary">+ Add image<input type="file" id='inpFile' name="img" accept="image/*" onchange="picture()"hidden></label>
 
                         <div>File sizes of 32MB or less</div>
                     </div>
