@@ -31,11 +31,16 @@
                 var code = document.getElementById('template').innerHTML;
                 var initiativesDiv = document.getElementById('initiatives');
 
-                for (i = 0; i < initiatives.length; i++) {
+                for (let i = 0; i < initiatives.length; i++) {
                     var elem = document.createElement('div');
                     elem.innerHTML = code;
 
                     elem.getElementsByClassName('title')[0].innerHTML = initiatives[i].title;
+                    elem.getElementsByClassName('title')[0].onclick = function () {
+                        let path = "initiative_preview.html?num=" + (i).toString();
+                        window.location.href = path; 
+                    }
+
                     elem.getElementsByClassName('descr')[0].innerHTML = initiatives[i].descr;
                     elem.getElementsByClassName('initiativeImg')[0].src = initiatives[i].images[0];
 

@@ -12,24 +12,30 @@
 
 
         <script type="text/javascript">
-            function initData() {
-                var accounts = [{name: 'admin', surname:'', email: 'admin', id_num: 'admin', password: 'admin'}];
-                var currAccount = null;
-                var initiatives = [{title: "We've had enough of the broken streets of Prilep! They must get fixed immidiately!",
-                                    descr: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quis tempus felis. Proin eget tincidunt nibh. Donec elementum sem vitae quam tempor, sed sagittis libero dapibus. Donec sodales tortor nulla, eu egestas felis pellentesque ornare. Sed nibh nunc, pulvinar ut felis vitae, luctus convallis nibh. Etiam id auctor odio. Morbi fermentum imperdiet felis non malesuada. Integer ultrices ornare nulla eu luctus. Suspendisse potenti. ",
-                                    images: ['slika_pothole.jpg'], anon: true}];
-
-
-                localStorage.accounts = JSON.stringify(accounts);
-                localStorage.currAccount = JSON.stringify(currAccount);
-
-                localStorage.initiatives = JSON.stringify(initiatives);
+            function getParameterByName(name, url = window.location.href) {
+                name = name.replace(/[\[\]]/g, '\\$&');
+                var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                    results = regex.exec(url);
+                if (!results) return null;
+                if (!results[2]) return '';
+                return decodeURIComponent(results[2].replace(/\+/g, ' '));
             }
+
+            function populate() {
+                var currIni = getParameterByName('num');
+
+                var initiatives = JSON.parse(localStorage.initiatives);
+
+                document.getElementById('title').innerHTML = initiatives[currIni].title;
+                document.getElementById('descr').innerHTML = initiatives[currIni].descr;
+                document.getElementById('initiativeImg').src = initiatives[currIni].images[0];
+            }
+
         </script>
     </head>
 
 
-    <body onload='initData()'>
+    <body onload='populate()'>
         <nav class="navbar navbar-light" style='background-color: #333333;'>
             <div class="container-fluid">
                 <a class="navbar-brand" style='color: #49C1CB; font-weight: bold; font-size: 2.0rem;' href="#">Initiativia</a>
@@ -45,12 +51,12 @@
         </nav>
 
         <div class='container'>
-            <div style='color: #126E75; font-weight: bold; font-size: 1.7rem;'>
-                Let's fix society's problems together! Start your own initiative or support others'!
+            <div id='title' style='color: #126E75; font-weight: bold; font-size: 1.7rem;'>
+                
             </div>
-            <img src='slika_intro.jpg'>
-            <div>
-                <button type="button" class="btn btn-primary" style='background-color: #F5E71B; color: black; border-color: #F5E71B;'>Start your own initiative now!</button>
+            <img id='initiativeImg' width='300px' height='200px'>
+            <div id='descr'>
+
             </div>
         </div>
     </body>

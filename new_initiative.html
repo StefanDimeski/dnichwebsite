@@ -63,6 +63,10 @@
                 initiatives.push({title: title, descr: descr, images: imgSrcs, anon: false});
 
                 localStorage.initiatives = JSON.stringify(initiatives);
+
+                var path = "initiative_preview.html?num=" + (initiatives.length - 1).toString();
+
+                window.location.href = path; 
             }
 
             function startInitiativeAnon() {
@@ -85,7 +89,10 @@
                 initiatives.push({title: title, descr: descr, images: imgSrcs, anon: true});
 
                 localStorage.initiatives = JSON.stringify(initiatives);
-                
+
+                var path = "initiative_preview.html?num=" + (initiatives.length - 1).toString();
+
+                window.location.href = path; 
             }
         </script>
     </head>
