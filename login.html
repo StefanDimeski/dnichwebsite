@@ -29,23 +29,22 @@
                 var email = document.getElementById('email_field').value;
                 var pass = document.getElementById('pass_field').value;
 
-                for (let acc in accounts) {
-                    if (email.localeCompare(acc.email)) {
+                var showErrorEnd = true;
 
-                        console.log(email + 'is the same as' + acc.email);
-                        console.log(JSON.stringify(acc));
-                        
-                        if (pass.localeCompare(acc.password)) {
+                for (i = 0; i < accounts.length; i++) {
+                    if (email.localeCompare(accounts[i].email) == 0) {
+
+                        if (pass.localeCompare(accounts[i].password) == 0) {
                             //Successful login
-                            console.log('successful login');
+                            showErrorEnd = false;
 
-                            localStorage.currAccount = JSON.stringify(acc);
-                            //window.location.href= "main.html";
+                            localStorage.currAccount = JSON.stringify(accounts[i]);
+                            window.location.href= "main.html";
 
                             break;
                         } else {
                             // Wrong password
-                            console.log('wrong password');
+                            showErrorEnd = false;
 
                             showError2();
                             break;
@@ -53,10 +52,10 @@
                     }
                 }
 
-                // No such account found.
-                console.log('no such acc found');
-
-                showError2();
+                if (showErrorEnd) {
+                    // No such account found.
+                    showError2();
+                }   
             }
         </script>
 

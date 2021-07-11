@@ -16,13 +16,36 @@
 
 
          <script type="text/javascript">
+            function init() {
+                getText();
+                drawInitiatives();
+            }
+
             function getText() {
                 var currAcc = JSON.parse(localStorage.currAccount);
                 document.getElementById('navbarDropdown').innerHTML = currAcc.name;
             }
+
+            function drawInitiatives() {
+                var initiatives = JSON.parse(localStorage.initiatives);
+                var code = document.getElementById('template').innerHTML;
+                var initiativesDiv = document.getElementById('initiatives');
+
+                for (i = 0; i < initiatives.length; i++) {
+                    var elem = document.createElement('div');
+                    elem.innerHTML = code;
+
+                    elem.getElementsByClassName('title')[0].innerHTML = initiatives[i].title;
+                    elem.getElementsByClassName('descr')[0].innerHTML = initiatives[i].descr;
+                    elem.getElementsByClassName('initiativeImg')[0].src = initiatives[i].images[0];
+
+                    initiativesDiv.appendChild(elem);
+                }
+            }
         </script>
+
     </head>
-    <body onload='getText()'>
+    <body onload='init()'>
         <nav class="navbar navbar-expand" style='background-color: #333333;'>
             <div class='container-fluid'>  
                 <div>
@@ -54,45 +77,47 @@
         </nav>
 
         <div class='container'>
+            <script id="template" type="text/html">
+                <div class='row'>
+                    <div class='row' style='border: 1px solid black;'>
+                        <div class='col-3'>
+                            <img class='initiativeImg' src='slika_pothole.jpg' width=300px height=200px>
+                        </div>
+                        <div class='col-9'>
+                            <h3 class='title'></h3>
+                            <p class='descr'></p>
 
-            <div class='row'>
-                <div class='row' style='border: 1px solid black;'>
-                    <div class='col-3'>
-                        <img src='slika_pothole.jpg' width=300px height=200px>
-                    </div>
-                    <div class='col-9'>
-                        <h3>We've had enough of the broken streets of Prilep! They must get fixed immidiately!</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quis tempus felis. Proin eget tincidunt nibh. Donec elementum sem vitae quam tempor, sed sagittis libero dapibus. Donec sodales tortor nulla, eu egestas felis pellentesque ornare. Sed nibh nunc, pulvinar ut felis vitae, luctus convallis nibh. Etiam id auctor odio. Morbi fermentum imperdiet felis non malesuada. Integer ultrices ornare nulla eu luctus. Suspendisse potenti. </p>
-
-                        <a href='#'>
-                        <button type="button" class="btn btn-danger">Join the initiative</button>
-                        </a>
-                        <a href='#'>
-                        <button type="button" class="btn btn-success" >Support the initiative anonymously</button>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <div class='row'>
-                <div class='row' style='border: 1px solid black;'>
-                    <div class='col-3'>
-                        <img src='slika_pothole.jpg' width=300px height=200px>
-                    </div>
-                    <div class='col-9'>
-                        <h3>We've had enough of the broken streets of Prilep! They must get fixed immidiately!</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quis tempus felis. Proin eget tincidunt nibh. Donec elementum sem vitae quam tempor, sed sagittis libero dapibus. Donec sodales tortor nulla, eu egestas felis pellentesque ornare. Sed nibh nunc, pulvinar ut felis vitae, luctus convallis nibh. Etiam id auctor odio. Morbi fermentum imperdiet felis non malesuada. Integer ultrices ornare nulla eu luctus. Suspendisse potenti. </p>
-
-                        <a href='#'>
+                            <a href='#'>
                             <button type="button" class="btn btn-danger">Join the initiative</button>
-                        </a>
-                        <a href='#'>
-                            <button type="button"class="btn btn-success" >Support the initiative anonymously</button>
-                        </a>
+                            </a>
+                            <a href='#'>
+                            <button type="button" class="btn btn-success" >Support the initiative anonymously</button>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </script>
 
+            <div id='initiatives'>
+                <!--<div class='row'>
+                    <div class='row' style='border: 1px solid black;'>
+                        <div class='col-3'>
+                            <img src='slika_pothole.jpg' width=300px height=200px>
+                        </div>
+                        <div class='col-9'>
+                            <h3>We've had enough of the broken streets of Prilep! They must get fixed immidiately!</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quis tempus felis. Proin eget tincidunt nibh. Donec elementum sem vitae quam tempor, sed sagittis libero dapibus. Donec sodales tortor nulla, eu egestas felis pellentesque ornare. Sed nibh nunc, pulvinar ut felis vitae, luctus convallis nibh. Etiam id auctor odio. Morbi fermentum imperdiet felis non malesuada. Integer ultrices ornare nulla eu luctus. Suspendisse potenti. </p>
+
+                            <a href='#'>
+                            <button type="button" class="btn btn-danger">Join the initiative</button>
+                            </a>
+                            <a href='#'>
+                            <button type="button" class="btn btn-success" >Support the initiative anonymously</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>-->
+            </div>
         </div>
     </body>
 </html>

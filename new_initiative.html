@@ -43,6 +43,50 @@
                     console.log(reader.error);
                 };
             }
+
+            function startInitiative() {
+                var initiatives = JSON.parse(localStorage.initiatives);
+
+                var title = document.getElementById('initiative_title_field').value;
+                var descr = document.getElementById('initiative_descr_field').value;
+
+                var imgHolder = document.getElementById('imgPreviewsHolder');
+
+                var children = imgHolder.children;
+
+                var imgSrcs = [];
+
+                for (i = 0; i < children.lenght; i++) {
+                    imgSrcs.push(children[i].src);
+                }
+
+                initiatives.push({title: title, descr: descr, images: imgSrcs, anon: false});
+
+                localStorage.initiatives = JSON.stringify(initiatives);
+            }
+
+            function startInitiativeAnon() {
+
+                var initiatives = JSON.parse(localStorage.initiatives);
+
+                var title = document.getElementById('initiative_title_field').value;
+                var descr = document.getElementById('initiative_descr_field').value;
+
+                var imgHolder = document.getElementById('imgPreviewsHolder');
+
+                var children = imgHolder.children;
+
+                var imgSrcs = [];
+
+                for (i = 0; i < children.length; i++) {
+                    imgSrcs.push(children[i].src);
+                }
+
+                initiatives.push({title: title, descr: descr, images: imgSrcs, anon: true});
+
+                localStorage.initiatives = JSON.stringify(initiatives);
+                
+            }
         </script>
     </head>
 
@@ -71,19 +115,19 @@
                     <div class='row'>
                         <input type="email" class="form-control" id="initiative_title_field" placeholder="Title">
                         <div>Title must be between 10 and 25 characters </div>
-                        <input type="email" class="form-control" id="initiative_title_field" placeholder="Describe your initiative">
+                        <input type="email" class="form-control" id="initiative_descr_field" placeholder="Describe your initiative">
                     </div>
                     <div class='row'>
                         <div id='imgPreviewsHolder'>
-                            <img src='' id='previewPic'>
+                            <!--<img src='' id='previewPic'>-->
                         </div>
                         <label class="btn btn-primary">+ Add image<input type="file" id='inpFile' name="img" accept="image/*" onchange="picture()"hidden></label>
 
                         <div>File sizes of 32MB or less</div>
                     </div>
                     <div class='row'>
-                        <button type='button' class='btn btn-danger'>Start initiative</button>
-                        <button type='button' class='btn btn-success'>Start initiative anonymously</button>
+                        <button type='button' class='btn btn-danger' onclick='startInitiative()'>Start initiative</button>
+                        <button type='button' class='btn btn-success' onclick='startInitiativeAnon()'>Start initiative anonymously</button>
                     </div>
 
                     <img id='testid'>
