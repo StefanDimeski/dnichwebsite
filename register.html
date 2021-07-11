@@ -13,11 +13,20 @@
 
         <script type="text/javascript">
             function saveData() {
-                localStorage.name = document.getElementById('name_field').value;
-                localStorage.surname = document.getElementById('surname_field').value;
-                localStorage.email = document.getElementById('email_field').value;
-                localStorage.id_num = document.getElementById('id_num_field').value;
-                localStorage.pass = document.getElementById('pass_field').value;
+                name = document.getElementById('name_field').value;
+                surname = document.getElementById('surname_field').value;
+                email = document.getElementById('email_field').value;
+                id_num = document.getElementById('id_num_field').value;
+                pass = document.getElementById('pass_field').value;
+
+                var newAcc = {name: name, surname: surname, email: email, id_num: id_num, password: pass};
+
+                var accounts = JSON.parse(localStorage.accounts);
+                accounts.push(newAcc);
+
+                localStorage.accounts = JSON.stringify(accounts);
+
+                localStorage.currAccount = JSON.stringify(accounts[accounts.length - 1]);
             }
         </script>
     </head>

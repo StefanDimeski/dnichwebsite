@@ -17,7 +17,8 @@
 
          <script type="text/javascript">
             function getText() {
-                document.getElementById('navbarDropdown').innerHTML = localStorage.name;
+                var currAcc = JSON.parse(localStorage.currAccount);
+                document.getElementById('navbarDropdown').innerHTML = currAcc.name;
             }
         </script>
     </head>

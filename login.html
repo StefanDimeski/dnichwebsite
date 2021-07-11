@@ -19,6 +19,45 @@
             function showError2() {
                 document.getElementById('errormsg').classList.add('popup');
             }
+
+
+            function login() {
+                var accounts = JSON.parse(localStorage.accounts);
+
+                console.log(JSON.stringify(accounts));
+
+                var email = document.getElementById('email_field').value;
+                var pass = document.getElementById('pass_field').value;
+
+                for (let acc in accounts) {
+                    if (email.localeCompare(acc.email)) {
+
+                        console.log(email + 'is the same as' + acc.email);
+                        console.log(JSON.stringify(acc));
+                        
+                        if (pass.localeCompare(acc.password)) {
+                            //Successful login
+                            console.log('successful login');
+
+                            localStorage.currAccount = JSON.stringify(acc);
+                            //window.location.href= "main.html";
+
+                            break;
+                        } else {
+                            // Wrong password
+                            console.log('wrong password');
+
+                            showError2();
+                            break;
+                        }
+                    }
+                }
+
+                // No such account found.
+                console.log('no such acc found');
+
+                showError2();
+            }
         </script>
 
 
@@ -65,9 +104,10 @@
                 <div class='errormessage' id='errormsg'>Your password is wrong!</div>
                 <input type="email" class="form-control" id="email_field" placeholder="E-mail">
                 <input type="password" class="form-control" id="pass_field" placeholder="Password">
-                <a href='#' onclick="showError2()">
-                    <button type="button" class="btn btn-primary text-light" style='background-color: #49C1CB; color: black; border-color: #49C1CB;'>Log in</button>
-                </a>
+                <!--<a href='#' onclick="showError2()">
+                    <button type="button" class="btn btn-primary text-light" style='background-color: #49C1CB; color: black; border-color: #49C1CB;'>Log in</button>-->
+
+                <button type="button" class="btn btn-primary text-light" onclick='login()' style='background-color: #49C1CB; color: black; border-color: #49C1CB;'>Log in</button>
             </div>
         </div>
     </body>

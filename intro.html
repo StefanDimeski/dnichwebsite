@@ -12,14 +12,22 @@
 
 
         <script type="text/javascript">
-            function saveName() {
-                localStorage.name = document.getElementById('name').value;
+            function initData() {
+                var accounts = [{name: 'admin', surname:'', email: 'admin', id_num: 'admin', password: 'admin'}];
+                var currAccount = null;
+                var initiatives = [];
+
+
+                localStorage.accounts = JSON.stringify(accounts);
+                localStorage.currAccount = JSON.stringify(currAccount);
+
+                localStorage.initiatives = JSON.stringify(initiatives);
             }
         </script>
     </head>
 
 
-    <body>
+    <body onload='initData()'>
         <nav class="navbar navbar-light" style='background-color: #333333;'>
             <div class="container-fluid">
                 <a class="navbar-brand" style='color: #49C1CB; font-weight: bold; font-size: 2.0rem;' href="#">Initiativia</a>
