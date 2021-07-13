@@ -22,6 +22,11 @@
                 var initiativesDiv = document.getElementById('initiatives');
 
                 for (let i = 0; i < initiatives.length; i++) {
+
+                    if (initiatives[i].deleted == true) {
+                        continue;
+                    }
+
                     var elem = document.createElement('div');
                     elem.innerHTML = code;
 
@@ -34,10 +39,89 @@
                     elem.getElementsByClassName('descr')[0].innerHTML = initiatives[i].descr;
                     elem.getElementsByClassName('initiativeImg')[0].src = initiatives[i].images[0];
 
+                    elem.getElementsByClassName('buttonJoin')[0].onclick = function () {
+                        let currAcc = JSON.parse(localStorage.currAccount);
+                        let initiative = initiatives[i];
+
+                        initiative.anon = false;
+
+                        this.parentElement.classList.add('popout');
+
+                        let grandparent = this.parentElement.parentElement;
+                        grandparent.getElementsByClassName('centered')[0].hidden = false;
+                        grandparent.getElementsByClassName('centered')[0].classList.add('popup');
+
+                        currAcc.supportedInitiatives.push(initiative);
+                        localStorage.currAccount = JSON.stringify(currAcc);
+                    }
+
+                    elem.getElementsByClassName('buttonJoinAnon')[0].onclick = function () {
+                        let currAcc = JSON.parse(localStorage.currAccount);
+                        let initiative = initiatives[i];
+
+                        initiative.anon = true;
+
+                        this.parentElement.classList.add('popout');
+
+                        let grandparent = this.parentElement.parentElement;
+                        grandparent.getElementsByClassName('centered')[1].hidden = false;
+                        grandparent.getElementsByClassName('centered')[1].classList.add('popup');
+
+                        currAcc.supportedInitiatives.push(initiative);
+                        localStorage.currAccount = JSON.stringify(currAcc);
+                    }
+
+
                     initiativesDiv.appendChild(elem);
                 }
             }
+
+            function logout() {
+                localStorage.currAccount = null;
+
+                window.location.href = 'intro.html';
+            }
         </script>
+
+        <style>
+            @keyframes fadeIn {
+                0% {opacity: 0;}
+                100% {opacity: 1;}
+            }
+
+            @keyframes fadeOut {
+                0% {opacity: 1;}
+                100% {opacity: 0;}
+            }
+
+            .popup {
+                -webkit-animation: fadeIn 2s forwards;
+                animation: fadeIn 0.5s forwards;
+            }
+
+            .popout {
+                -webkit-animation: fadeOut 2s forwards;
+                animation: fadeOut 0.5s forwards;
+            }
+
+            .errormessage {
+                height: 0px;
+                overflow: hidden;
+            }
+
+            .containerA {
+              position: relative;
+              text-align: center;
+              color: white;
+            }
+
+            .centered {
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+            }
+        </style>
 
     </head>
     <body onload='init()'>
@@ -59,10 +143,11 @@
                             Dropdown
                           </a>
                           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a class="dropdown-item active" href="">All initiatives</a></li>
+                            <li><a class="dropdown-item" href="initiatives_i_support.html">Initiatives I support</a></li>
+                            <li><a class="dropdown-item" href="myinitiatives.html">My initiatives</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            <li><a class="dropdown-item" onclick='logout()'>Log out</a></li>
                           </ul>
                         </div>
                     </div>
@@ -81,13 +166,24 @@
                             <h3 class='title mt-2'></h3>
                             <p class='descr'></p>
 
-                            <div class='mb-2'>
-                                <a href='#'>
-                                    <button type="button" class="btn btn-danger">Join the initiative</button>
-                                </a>
-                                <a href='#'>
-                                    <button type="button" class="btn btn-success" >Support the initiative anonymously</button>
-                                </a>
+                            <div class='containerA'>
+                                <div class='mb-2'>
+                                    <button type="button" class="btn btn-danger buttonJoin">Join the initiative</button>
+                                    <button type="button" class="btn btn-success buttonJoinAnon">Support the initiative anonymously</button>
+                                </div>
+                                <div class='centered mb-2' style="opacity: 0;" hidden>
+                                    <div class="alert alert-success fade show mt-3 mb-1" role="alert">
+                                        You successfully supported this initiative <strong>publicly!</strong>
+                                    </div>
+                                    <button type="button" class="btn btn-danger" onclick=''>Unsupport</button>
+                                </div>
+                                <div class='centered mb-2' style="opacity: 0;" hidden>
+                                    <div class="alert alert-success fade show mt-3 mb-1" role="alert">
+                                        You successfully supported this initiative <strong>anonymously!</strong>
+                                    </div>
+                                    <button type="button" class="btn btn-danger" onclick=''>Unsupport</button>
+                                </div>
+
                             </div>
                         </div>
                     </div>

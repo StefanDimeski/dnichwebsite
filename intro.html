@@ -8,11 +8,12 @@
 
         <script type="text/javascript">
             function initData() {
-                var accounts = [{name: 'admin', surname:'', email: 'admin', id_num: 'admin', password: 'admin'}];
+                var accounts = [{name: 'admin', surname:'', email: 'admin', id_num: 'admin', password: 'admin', myInitiatives: [], supportedInitiatives: []}];
+
                 var currAccount = null;
                 var initiatives = [{title: "We've had enough of the broken streets of Prilep! They must get fixed immidiately!",
                                     descr: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quis tempus felis. Proin eget tincidunt nibh. Donec elementum sem vitae quam tempor, sed sagittis libero dapibus. Donec sodales tortor nulla, eu egestas felis pellentesque ornare. Sed nibh nunc, pulvinar ut felis vitae, luctus convallis nibh. Etiam id auctor odio. Morbi fermentum imperdiet felis non malesuada. Integer ultrices ornare nulla eu luctus. Suspendisse potenti. ",
-                                    images: ['slika_pothole.jpg'], anon: true}];
+                                    images: ['slika_pothole.jpg'], anon: true, deleted: false}];
 
 
                 localStorage.accounts = JSON.stringify(accounts);

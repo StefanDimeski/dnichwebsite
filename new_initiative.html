@@ -41,6 +41,7 @@
 
             function startInitiative() {
                 var initiatives = JSON.parse(localStorage.initiatives);
+                var currAcc = JSON.parse(localStorage.currAccount);
 
                 var title = document.getElementById('initiative_title_field').value;
                 var descr = document.getElementById('initiative_descr_field').value;
@@ -56,8 +57,10 @@
                 }
 
                 initiatives.push({title: title, descr: descr, images: imgSrcs, anon: false});
+                currAcc.myInitiatives.push({title: title, descr: descr, images: imgSrcs, anon: false});
 
                 localStorage.initiatives = JSON.stringify(initiatives);
+                localStorage.currAccount = JSON.stringify(currAcc);
 
                 var path = "initiative_preview.html?num=" + (initiatives.length - 1).toString() + "&new";
 
@@ -65,8 +68,8 @@
             }
 
             function startInitiativeAnon() {
-
                 var initiatives = JSON.parse(localStorage.initiatives);
+                var currAcc = JSON.parse(localStorage.currAccount);
 
                 var title = document.getElementById('initiative_title_field').value;
                 var descr = document.getElementById('initiative_descr_field').value;
@@ -82,8 +85,10 @@
                 }
 
                 initiatives.push({title: title, descr: descr, images: imgSrcs, anon: true});
+                currAcc.myInitiatives.push({title: title, descr: descr, images: imgSrcs, anon: true});
 
                 localStorage.initiatives = JSON.stringify(initiatives);
+                localStorage.currAccount = JSON.stringify(currAcc);
 
                 var path = "initiative_preview.html?num=" + (initiatives.length - 1).toString() + "&new";
 

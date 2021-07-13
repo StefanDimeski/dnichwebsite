@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+         <script type="text/javascript">
+            function init() {
+                getText();
+                drawInitiatives();
+            }
+
+            function getText() {
+                var currAcc = JSON.parse(localStorage.currAccount);
+                document.getElementById('navbarDropdown').innerHTML = currAcc.name;
+            }
+
+            function drawInitiatives() {
+                var currAcc = JSON.parse(localStorage.currAccount);
+                var initiatives = currAcc.supportedInitiatives;
+
+                var code = document.getElementById('template').innerHTML;
+                var initiativesDiv = document.getElementById('initiatives');
+
+                for (let i = 0; i < initiatives.length; i++) {
+
+                    if (initiatives[i].deleted == true) {
+                        continue;
+                    }
+                    
+                    var elem = document.createElement('div');
+                    elem.innerHTML = code;
+
+                    elem.getElementsByClassName('title')[0].innerHTML = initiatives[i].title;
+                    elem.getElementsByClassName('title')[0].onclick = function () {
+                        let path = "initiative_preview.html?num=" + (i).toString();
+                        window.location.href = path; 
+                    }
+
+                    elem.getElementsByClassName('descr')[0].innerHTML = initiatives[i].descr;
+                    elem.getElementsByClassName('initiativeImg')[0].src = initiatives[i].images[0];
+
+                    elem.getElementsByClassName('btnUnsupport')[0].onclick = function() {
+                        let initiative = initiatives[i];
+
+                        let currAcc = JSON.parse(localStorage.currAccount);
+
+                        for (i = 0; i < currAcc.supportedInitiatives.length; i++) {
+                            if (initiative.title.localeCompare(currAcc.supportedInitiatives[i].title) == 0 &&
+                                initiative.descr.localeCompare(currAcc.supportedInitiatives[i].descr) == 0) {
+
+                                currAcc.supportedInitiatives.splice(i, 1);
+                                break;
+                            }
+                        }
+
+                        localStorage.currAccount = JSON.stringify(currAcc);
+
+                        let grandparent = this.parentElement.parentElement;
+                        grandparent.getElementsByClassName('centered')[0].hidden = false;
+                        grandparent.getElementsByClassName('centered')[0].classList.add('popup');
+                    }
+
+                    initiativesDiv.appendChild(elem);
+                }
+            }
+
+            function logout() {
+                let accounts = JSON.parse(localStorage.accounts);
+                let currAccount = JSON.parse(localStorage.currAccount);
+
+                for (i = 0; i < accounts.length; i++) {
+                    if (accounts[i].name.localeCompare(currAccount.name) == 0 && 
+                        accounts[i].surname.localeCompare(currAccount.surname) == 0 &&
+                        accounts[i].email.localeCompare(currAccount.email) == 0 &&
+                        accounts[i].id_num.localeCompare(currAccount.id_num) == 0 &&
+                        accounts[i].password.localeCompare(currAccount.password) == 0) {
+
+                        accounts[i] = currAccount;
+                        break;
+                    }
+                }
+
+                localStorage.accounts = JSON.stringify(accounts);
+
+                localStorage.currAccount = null;
+
+                window.location.href = 'intro.html';
+            }
+        </script>
+
+        <style>
+            @keyframes fadeIn {
+                0% {opacity: 0;}
+                100% {opacity: 1;}
+            }
+
+            @keyframes fadeOut {
+                0% {opacity: 1;}
+                100% {opacity: 0;}
+            }
+
+            .popup {
+                -webkit-animation: fadeIn 2s forwards;
+                animation: fadeIn 0.5s forwards;
+            }
+
+            .popout {
+                -webkit-animation: fadeOut 2s forwards;
+                animation: fadeOut 0.5s forwards;
+            }
+
+            .errormessage {
+                height: 0px;
+                overflow: hidden;
+            }
+
+            .containerA {
+              position: relative;
+              text-align: center;
+              color: white;
+            }
+
+            .centered {
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+            }
+        </style>
+
+    </head>
+    <body onload='init()'>
+        <nav class="navbar navbar-expand" style='background-color: #333333;'>
+            <div class='container-fluid'>  
+                <div>
+                    <a class="navbar-brand" style='color: #49C1CB; font-weight: bold; font-size: 2.0rem;' href="#">Initiativia</a>
+                    <button type='button' class='btn btn-primary'>Back</button>
+                </div>
+
+                <div>
+
+                    <div class="navbar-nav mr-auto">
+                        <a href='new_initiative.html'>
+                        <button type="button" class="btn btn-primary" style='background-color: #49C1CB; color: black; border-color: #49C1CB;'>Start a new initiative</button>
+                        </a>
+                        <div class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Dropdown
+                          </a>
+                          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="main.html">All initiatives</a></li>
+                            <li><a class="dropdown-item active" href="">Initiatives I support</a></li>
+                            <li><a class="dropdown-item" href="myInitiatives.html">My initiatives</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Log out</a></li>
+                          </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class='container'>
+            <script id="template" type="text/html">
+                <div class='row'>
+                    <div class='row mt-3' style='border: 1px solid black;'>
+                        <div class='col-3 d-flex align-items-center p-0 my-2'>
+                            <img class='initiativeImg' src='slika_pothole.jpg' width=310px height=220px>
+                        </div>
+                        <div class='col-9 px-0'>
+                            <h3 class='title mt-2'></h3>
+                            <p class='descr'></p>
+
+                            <div class='containerA'>
+                                <div class='mb-2'>
+                                    <button type="button" class="btn btn-danger btnUnsupport">Unsupport</button>
+                                </div>
+                                <div class='centered mb-2' style="opacity: 0;" hidden>
+                                    <div class="alert alert-success fade show mt-3 mb-1" role="alert">
+                                        You successfully <strong>unsupported</strong> this initiative!
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </script>
+
+            <div id='initiatives'>
+                <!--<div class='row'>
+                    <div class='row' style='border: 1px solid black;'>
+                        <div class='col-3'>
+                            <img src='slika_pothole.jpg' width=300px height=200px>
+                        </div>
+                        <div class='col-9'>
+                            <h3>We've had enough of the broken streets of Prilep! They must get fixed immidiately!</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quis tempus felis. Proin eget tincidunt nibh. Donec elementum sem vitae quam tempor, sed sagittis libero dapibus. Donec sodales tortor nulla, eu egestas felis pellentesque ornare. Sed nibh nunc, pulvinar ut felis vitae, luctus convallis nibh. Etiam id auctor odio. Morbi fermentum imperdiet felis non malesuada. Integer ultrices ornare nulla eu luctus. Suspendisse potenti. </p>
+
+                            <a href='#'>
+                            <button type="button" class="btn btn-danger">Join the initiative</button>
+                            </a>
+                            <a href='#'>
+                            <button type="button" class="btn btn-success" >Support the initiative anonymously</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>-->
+            </div>
+        </div>
+
+
+    </body>
+</html>
