@@ -1,14 +1,9 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script
-          src="https://code.jquery.com/jquery-3.6.0.js"
-          integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-          crossorigin="anonymous"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
 
         <script type="text/javascript">
@@ -27,26 +22,54 @@
                 var initiatives = JSON.parse(localStorage.initiatives);
 
                 let imgHolder = document.getElementById('imgHolder');
+                let indicatorsHolder = document.getElementById('carouselIndicators');
 
                 var template1 = document.getElementById('template1').innerHTML;
                 var template2 = document.getElementById('template2').innerHTML;
+
+                var indicatorsTemplate1 = document.getElementById('indicatorsTemplate1').innerHTML;
+                var indicatorsTemplate2 = document.getElementById('indicatorsTemplate2').innerHTML;
 
                 document.getElementById('title').innerHTML = initiatives[currIni].title;
                 document.getElementById('descr').innerHTML = initiatives[currIni].descr;
                 //document.getElementById('initiativeImg').src = initiatives[currIni].images[0];
 
                 for (i = 0; i < initiatives[currIni].images.length; i++) {
-                    var elem = document.createElement('div');
+                    var elem1 = document.createElement('div');
 
                     if (i == 0) {
-                        elem.innerHTML = template1;
+                        elem1.innerHTML = template1;
                     } else {
-                        elem.innerHTML = template2;
+                        elem1.innerHTML = template2;
                     }
 
-                    elem.getElementsByTagName('img')[0].src = initiatives[currIni].images[i];
+                    elem1.getElementsByTagName('img')[0].src = initiatives[currIni].images[i];
 
-                    imgHolder.appendChild(elem);
+                    imgHolder.appendChild(elem1.children[0]);
+
+                    if (initiatives[currIni].images.length > 1) {
+                        var elem2 = document.createElement('div');
+
+                        if (i == 0) {
+                            elem2.innerHTML = indicatorsTemplate1;
+                        } else {
+                            elem2.innerHTML = indicatorsTemplate2;
+                        }
+
+                        console.log(elem2);
+
+                        elem2.children[0].setAttribute('data-bs-slide-to', i);
+
+                        indicatorsHolder.appendChild(elem2.children[0]);
+                    }
+                }
+
+                if (initiatives[currIni].images.length <= 1) {
+                    document.getElementById('prevBtn').disabled = true;
+                    document.getElementById('prevBtn').hidden = true;
+
+                    document.getElementById('nextBtn').disabled = true;
+                    document.getElementById('nextBtn').hidden = true;
                 }
 
                 var isItNew = getParameterByName('new');
@@ -74,7 +97,13 @@
             </div>
         </script>
 
+        <script id="indicatorsTemplate1" type="text/html">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"></button>
+        </script>
 
+        <script id="indicatorsTemplate2" type="text/html">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"></button>
+        </script>
 
         <nav class="navbar navbar-light" style='background-color: #333333;'>
             <div class="container-fluid">
@@ -91,12 +120,12 @@
         </nav>
 
         <div class='container'>
-            <div class="alert alert-success alert-dismissible fade show mt-2" role="alert" id='newAlert'>
+
+            <div id='newAlert' class="alert alert-success alert-dismissible fade show mt-3 mb-1" role="alert">
                 Your initiative was created <strong>successfully!</strong>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
+
             <div id='title' style='color: #126E75; font-weight: bold; font-size: 1.7rem;'>
                 
             </div>
@@ -105,18 +134,15 @@
             </div>-->
 
             <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" style='width: 50%; height:50%;'>
-                  <div class="carousel-indicators">
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                  <div class="carousel-indicators" id='carouselIndicators'>
                   </div>
                   <div class="carousel-inner" id='imgHolder'>
                   </div>
-                  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                  <button id='prevBtn' class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Previous</span>
                   </button>
-                  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                  <button id='nextBtn' class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Next</span>
                   </button>
