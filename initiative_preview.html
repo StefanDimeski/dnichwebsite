@@ -17,6 +17,10 @@
             }
 
             function populate() {
+                var currAcc = JSON.parse(localStorage.currAccount);
+                document.getElementById('navbarDropdown').innerHTML = currAcc.name;
+
+
                 var currIni = getParameterByName('num');
 
                 var initiatives = JSON.parse(localStorage.initiatives);
@@ -75,8 +79,30 @@
                 var isItNew = getParameterByName('new');
 
                 if (isItNew == null) {
-                    console.log('gotten');
                     document.getElementById('newAlert').style.display = 'none';
+                }
+
+                var supportedInitiatives = JSON.parse(localStorage.currAccount).supportedInitiatives;
+
+                var supported = false;
+
+                for (i=0; i < supportedInitiatives.length; i++) {
+                    if (initiatives[currIni].title.localeCompare(supportedInitiatives[i].title) == 0 &&
+                        initiatives[currIni].descr.localeCompare(supportedInitiatives[i].descr) == 0) {
+
+                        if (supportedInitiatives[i].anon == true) {
+                            document.getElementById('textSupportAnon').hidden = false;
+                        } else {
+                            document.getElementById('textSupport').hidden = false;
+                        }
+
+                        supported = true;
+                        break;
+                    }
+                }
+
+                if (supported == false) {
+                    document.getElementById('joinSupport').hidden = false;
                 }
             }
 
@@ -105,16 +131,32 @@
             <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"></button>
         </script>
 
-        <nav class="navbar navbar-light" style='background-color: #333333;'>
-            <div class="container-fluid">
-                <a class="navbar-brand" style='color: #49C1CB; font-weight: bold; font-size: 2.0rem;' href="#">Initiativia</a>
+        <nav class="navbar navbar-expand" style='background-color: #333333;'>
+            <div class='container-fluid'>  
                 <div>
-                    <a href='login.html'>
-                        <button type="button" class="btn btn-primary" style='background-color: #49C1CB; color: black; border-color: #49C1CB;'>Log in</button>
-                    </a>
-                    <a href='register.html'>
-                        <button type="button" class="btn btn-primary" style='background-color: #49C1CB; color: black; border-color: #49C1CB;'>Sign up</button>
-                    </a>
+                    <a class="navbar-brand" style='color: #49C1CB; font-weight: bold; font-size: 2.0rem;' href="#">Initiativia</a>
+                    <button type='button' class='btn btn-primary'>Back</button>
+                </div>
+
+                <div>
+
+                    <div class="navbar-nav mr-auto">
+                        <a href='new_initiative.html'>
+                        <button type="button" class="btn btn-primary" style='background-color: #49C1CB; color: black; border-color: #49C1CB;'>Start a new initiative</button>
+                        </a>
+                        <div class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Dropdown
+                          </a>
+                          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="main.html">All initiatives</a></li>
+                            <li><a class="dropdown-item" href="initiatives_i_support.html">Initiatives I support</a></li>
+                            <li><a class="dropdown-item" href="myinitiatives.html">My initiatives</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" onclick='logout()'>Log out</a></li>
+                          </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -152,13 +194,22 @@
 
             </div>
 
-            <a href='#'>
+            <div id='joinSupport' hidden>
                 <button type="button" class="btn btn-danger">Join the initiative</button>
-            </a>
-
-            <a href='#'>
                 <button type="button" class="btn btn-success" >Support the initiative anonymously</button>
-            </a>
+            </div>
+
+            <div id='textSupport' hidden>
+                <div class="alert alert-success fade show mt-3 mb-1" role="alert">
+                    You support this initiative <strong>publicly!</strong>
+                </div>
+            </div>
+
+            <div id='textSupportAnon' hidden>
+                <div class="alert alert-success fade show mt-3 mb-1" role="alert">
+                    You support this initiative <strong>anonymously!</strong>
+                </div>
+            </div>
         </div>
     </body>
 </html>

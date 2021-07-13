@@ -72,6 +72,30 @@
                     }
 
 
+                    var supportedInitiatives = JSON.parse(localStorage.currAccount).supportedInitiatives;
+
+                    var supported = false;
+
+                    for (j=0; j < supportedInitiatives.length; j++) {
+                        if (initiatives[i].title.localeCompare(supportedInitiatives[j].title) == 0 &&
+                            initiatives[i].descr.localeCompare(supportedInitiatives[j].descr) == 0) {
+
+                            if (supportedInitiatives[j].anon == true) {
+                                elem.getElementsByClassName('textSupportAnon')[0].hidden = false;
+                            } else {
+                                elem.getElementsByClassName('textSupport')[0].hidden = false;
+                            }
+
+                            supported = true;
+                            break;
+                        }
+                    }
+
+                    if (supported == false) {
+                        elem.getElementsByClassName('containerA')[0].hidden = false;
+                    }
+
+
                     initiativesDiv.appendChild(elem);
                 }
             }
@@ -166,7 +190,7 @@
                             <h3 class='title mt-2'></h3>
                             <p class='descr'></p>
 
-                            <div class='containerA'>
+                            <div class='containerA' hidden>
                                 <div class='mb-2'>
                                     <button type="button" class="btn btn-danger buttonJoin">Join the initiative</button>
                                     <button type="button" class="btn btn-success buttonJoinAnon">Support the initiative anonymously</button>
@@ -183,7 +207,17 @@
                                     </div>
                                     <button type="button" class="btn btn-danger" onclick=''>Unsupport</button>
                                 </div>
+                            </div>
+                            <div class='textSupport' hidden>
+                                <div class="alert alert-success fade show mt-3 mb-1" role="alert">
+                                    You support this initiative <strong>publicly!</strong>
+                                </div>
+                            </div>
 
+                            <div class='textSupportAnon' hidden>
+                                <div class="alert alert-success fade show mt-3 mb-1" role="alert">
+                                    You support this initiative <strong>anonymously!</strong>
+                                </div>
                             </div>
                         </div>
                     </div>
