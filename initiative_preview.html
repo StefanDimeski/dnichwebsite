@@ -29,6 +29,13 @@
                 document.getElementById('title').innerHTML = initiatives[currIni].title;
                 document.getElementById('descr').innerHTML = initiatives[currIni].descr;
                 document.getElementById('initiativeImg').src = initiatives[currIni].images[0];
+
+                var isItNew = getParameterByName('new');
+
+                if (isItNew == null) {
+                    console.log('gotten');
+                    document.getElementById('newAlert').style.display = 'none';
+                }
             }
 
         </script>
@@ -51,6 +58,12 @@
         </nav>
 
         <div class='container'>
+            <div class="alert alert-success alert-dismissible fade show mt-2" role="alert" id='newAlert'>
+                Your initiative was created <strong>successfully!</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
             <div id='title' style='color: #126E75; font-weight: bold; font-size: 1.7rem;'>
                 
             </div>

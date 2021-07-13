@@ -78,6 +78,18 @@
                 height: 0px;
                 overflow: hidden;
             }
+
+            .surrounded-text {
+              display: flex;
+              flex-direction: row;
+            }
+
+            .surrounded-text:before, .surrounded-text:after{
+              content: "";
+              flex: 1 1;
+              border-bottom: 1px solid;
+              margin: auto;
+            }
         </style>
     </head>
 
@@ -97,17 +109,27 @@
             </div>
         </nav>-->
 
-        <div class='container'>
-            <div style='border: 2px solid black;'>
-                <a style='color: #49C1CB; font-weight: bold; font-size: 2.0rem;' href="#">Initiativia</a>
-                <div class='errormessage' id='errormsg'>Your password is wrong!</div>
-                <input type="email" class="form-control" id="email_field" placeholder="E-mail">
-                <input type="password" class="form-control" id="pass_field" placeholder="Password">
+        <div class='d-flex align-items-center' style='min-height: 100vh; transform: translate(0, -15%);'>
+        <div class='container' style='width: 30%;'>
+            <div style='border: 1px solid black;'>
+                <div class='d-flex flex-column justify-content-center align-items-center'>
+                    <div class='my-2' style='color: #49C1CB; font-weight: bold; font-size: 2.0rem;' href="#">Initiativia</div>
+                    
+                    <div class='w-75'>
+                        <div class='errormessage' id='errormsg'>Your password is wrong!</div>
+                        <input type="email" class="form-control my-1 " id="email_field" placeholder="E-mail">
+                        <input type="password" class="form-control mb-3" id="pass_field" placeholder="Password">
+                    </div>
+                
                 <!--<a href='#' onclick="showError2()">
                     <button type="button" class="btn btn-primary text-light" style='background-color: #49C1CB; color: black; border-color: #49C1CB;'>Log in</button>-->
 
-                <button type="button" class="btn btn-primary text-light" onclick='login()' style='background-color: #49C1CB; color: black; border-color: #49C1CB;'>Log in</button>
+                    <button type="button" class="btn btn-primary text-light mb-1" onclick='login()' style='background-color: #49C1CB; color: black; border-color: #49C1CB;'>Log in</button>
+                    <div class='surrounded-text'>----------or----------</div>
+                    <div><a href='register.html'>Register now</a> to create a new account.</div>
+                </div>
             </div>
         </div>
+    </div>
     </body>
 </html>

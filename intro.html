@@ -26,11 +26,69 @@
                 localStorage.initiatives = JSON.stringify(initiatives);
             }
         </script>
+
+        <style>
+            .containerA {
+              position: relative;
+              text-align: center;
+              color: white;
+            }
+
+            /* Bottom left text */
+            .bottom-left {
+              position: absolute;
+              bottom: 8px;
+              left: 16px;
+            }
+
+            /* Top left text */
+            .top-left {
+              position: absolute;
+              top: 8px;
+              left: 16px;
+            }
+
+            /* Top right text */
+            .top-right {
+              position: absolute;
+              top: 8px;
+              right: 16px;
+            }
+
+            /* Bottom right text */
+            .bottom-right {
+              position: absolute;
+              bottom: 8px;
+              right: 16px;
+            }
+
+            /* Centered text */
+            .centered {
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+            }
+
+            .top-center {
+                position: absolute;
+                left: 50%;
+                top:  8px;
+                transform: translate(-50%, 0);
+            }
+
+            .bottom-center {
+                position: absolute;
+                left: 50%;
+                bottom: 8px;
+                transform: translate(-50%, 0);
+            }
+        </style>
     </head>
 
 
     <body onload='initData()'>
-        <nav class="navbar navbar-light" style='background-color: #333333;'>
+        <nav class="navbar navbar-light" style='background-color: #333333; max-height: 10vh;'>
             <div class="container-fluid">
                 <a class="navbar-brand" style='color: #49C1CB; font-weight: bold; font-size: 2.0rem;' href="#">Initiativia</a>
                 <div>
@@ -44,14 +102,17 @@
             </div>
         </nav>
 
-        <div class='container'>
-            <div style='color: #126E75; font-weight: bold; font-size: 1.7rem;'>
-                Let's fix society's problems together! Start your own initiative or support others'!
+        <div class='container-fluid'>
+            <div class='containerA'>
+                <img src='slika_intro2.jpg'>
+                <div class='top-center' style='color: #126E75; font-weight: bold; font-size: 1.7rem;'>
+                    Let's fix society's problems together! Start your own initiative or support others'!
+                </div>
             </div>
-            <img src='slika_intro.jpg'>
-            <div>
-                <button type="button" class="btn btn-primary" style='background-color: #F5E71B; color: black; border-color: #F5E71B;'>Start your own initiative now!</button>
-            </div>
+
+            <a href='login.html'>
+                <button type="button" class="btn btn-primary mx-auto d-block mt-5" style='background-color: #F5E71B; color: black; border-color: #F5E71B;'>Start your own initiative now!</button>
+            </a>
         </div>
     </body>
 </html>

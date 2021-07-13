@@ -47,17 +47,23 @@
             </div>
         </nav>-->
 
-        <div class='container'>
-            <div style='border: 2px solid black;'>
-                <a style='color: #49C1CB; font-weight: bold; font-size: 2.0rem;' href="#">Initiativia</a>
-                <input type="email" class="form-control" id="name_field" placeholder="Name">
-                <input type="email" class="form-control" id="surname_field" placeholder="Surname">
-                <input type="email" class="form-control" id="email_field" placeholder="E-mail">
-                <input type="email" class="form-control" id="id_num_field" placeholder="ID number">
-                <input type="password" class="form-control" id="pass_field" placeholder="Password">
-                <a href='main.html' onclick='saveData()'>
-                    <button type="button" class="btn btn-primary text-light" style='background-color: #49C1CB; color: black; border-color: #49C1CB;'>Register</button>
-                </a>
+        <div class='d-flex align-items-center' style='min-height: 100vh; transform: translate(0, -15%);'>
+            <div class='container' style='width: 30%;'>
+                <div style='border: 1px solid gray;'>
+                    <div class='d-flex flex-column justify-content-center align-items-center'>
+                        <a class='my-1' style='color: #49C1CB; font-weight: bold; font-size: 2.0rem;' href="#">Initiativia</a>
+                        <div style='width: 80%'>
+                            <input type="email" class="form-control my-1" id="name_field" placeholder="Name">
+                            <input type="email" class="form-control mb-1" id="surname_field" placeholder="Surname">
+                            <input type="email" class="form-control mb-1" id="email_field" placeholder="E-mail">
+                            <input type="email" class="form-control mb-1" id="id_num_field" placeholder="ID number">
+                            <input type="password" class="form-control mb-1" id="pass_field" placeholder="Password">
+                        </div>
+                        <a href='main.html' onclick='saveData()' class='mb-1'>
+                            <button type="button" class="btn btn-primary text-light" style='background-color: #49C1CB; color: black; border-color: #49C1CB;'>Register</button>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </body>
