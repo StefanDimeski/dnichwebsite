@@ -101,9 +101,13 @@
     <body onload='getText()'>
       <nav class="navbar navbar-light" style='background-color: #333333;'>
             <div class="container-fluid">
-                <div>
+                <div class='d-flex align-items-center flex-row'>
                     <a class="navbar-brand" style='color: #49C1CB; font-weight: bold; font-size: 2.0rem;' href="#">Initiativia</a>
-                    <button type='button' class='btn btn-primary'>Back</button>
+                    <button type='button' class='btn rounded-circle' style='background-color: #49C1CB; font-weight: bold; font-size: 2.0rem; transform: rotate(180deg);'>
+                        <div>
+                            &#10150;
+                        </div>
+                    </button>
                 </div>
                 <div>
                     <a href='register.html'>
@@ -120,27 +124,34 @@
                         <div style='color: #49C1CB; font-weight: bold; font-size: 2.0rem;'>Start a new initiative</div>
                     </div>
                     <div class='row'>
-                        <input type="email" class="form-control" id="initiative_title_field" placeholder="Title">
-                        <div>Title must be between 10 and 25 characters </div>
-                        <input type="email" class="form-control" id="initiative_descr_field" placeholder="Describe your initiative">
+                        <div class='d-flex align-items-center flex-row w-100'>
+                            <input type="email" class="form-control w-50" id="initiative_title_field" placeholder="Title">
+                            <div class='ml-2'>Title must be between 10 and 25 characters.</div>
+                        </div>
+                        <!--<input type="email" class="form-control" id="initiative_descr_field" placeholder="Describe your initiative">-->
+
+                        <textarea class='form-control mt-2 w-50 mb-3' rows = "5" cols = "60" placeholder="Describe your initiative" style='resize: none;'></textarea>
                     </div>
                     <div class='row'>
                         <div id='imgPreviewsHolder'>
                             <!--<img src='' id='previewPic'>-->
                         </div>
-                        <label class="btn btn-primary">+ Add image<input type="file" id='inpFile' name="img" accept="image/*" onchange="picture()"hidden></label>
 
-                        <div>File sizes of 32MB or less</div>
+                        <div class='d-flex align-items-center flex-row'>
+                            <label class="btn btn-primary m-0">+ Add image<input type="file" id='inpFile' name="img" accept="image/*" onchange="picture()"hidden></label>
+
+                            <div class='ml-2'>File sizes of 32MB or less.</div>
+                        </div>
                     </div>
-                    <div class='row'>
-                        <button type='button' class='btn btn-danger' onclick='startInitiative()'>Start initiative</button>
+                    <div class='row mt-3'>
+                        <button type='button' class='btn btn-danger mr-2' onclick='startInitiative()'>Start initiative</button>
                         <button type='button' class='btn btn-success' onclick='startInitiativeAnon()'>Start initiative anonymously</button>
                     </div>
 
                     <img id='testid'>
                 </div>
                 <div class='col-3' style='border: 0px solid black; border-left-width: 2px;'>
-                    <h1>Tips:</h1>
+                    <h2 class='mt-2'>Tips:</h2>
                     <p>- keep titles short and clean (our data shows shorter titles generate more traction).</p>
                 </div>
             </div>
