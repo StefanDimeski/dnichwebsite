@@ -40,8 +40,7 @@
             .centered {
               position: absolute;
               top: 50%;
-              left: 50%;
-              transform: translate(-50%, -50%);
+              transform: translate(0%, -50%);
             }
 
             .title:hover {
@@ -192,10 +191,15 @@
                 localStorage.currAccount = JSON.stringify(currAcc);
 
                 pressedBtn.parentElement.classList.add('popout');
+                pressedBtn.parentElement.classList.add('mb-4');
 
                 let grandparent = pressedBtn.parentElement.parentElement;
                 grandparent.getElementsByClassName('centered')[0].hidden = false;
                 grandparent.getElementsByClassName('centered')[0].classList.add('popup');
+
+                setTimeout(function() {
+                    window.location.href = window.location.href;
+                }, 1000);
             }
 
             function delet(pressedBtn) {
@@ -203,6 +207,7 @@
                 let allInitiatives = JSON.parse(localStorage.initiatives);
 
                 pressedBtn.parentElement.classList.add('popout');
+                pressedBtn.parentElement.classList.add('mb-4');
 
                 let grandparent = pressedBtn.parentElement.parentElement;
                 grandparent.getElementsByClassName('centered')[0].hidden = false;
@@ -222,6 +227,14 @@
                     }
                 }
 
+                for (i = 0; i < currAcc.supportedInitiatives.length; i++) {
+                    if (initiative.title.localeCompare(currAcc.supportedInitiatives[i].title) == 0 &&
+                        initiative.descr.localeCompare(currAcc.supportedInitiatives[i].descr) == 0) {
+
+                        currAcc.supportedInitiatives[i].deleted = true;
+                    }
+                }
+
                 localStorage.currAccount = JSON.stringify(currAcc);
 
                 for (i = 0; i < allInitiatives.length; i++) {
@@ -233,6 +246,10 @@
                 }
 
                 localStorage.initiatives = JSON.stringify(allInitiatives);
+
+                setTimeout(function() {
+                    window.location.href = 'main.html';
+                }, 1000);
             }
 
             function join(btn) {
@@ -245,6 +262,7 @@
                 initiative.anon = false;
 
                 btn.parentElement.classList.add('popout');
+                btn.parentElement.classList.add('mb-4');
 
                 let grandparent = btn.parentElement.parentElement;
                 grandparent.getElementsByClassName('centered')[0].hidden = false;
@@ -264,6 +282,7 @@
                 initiative.anon = true;
 
                 btn.parentElement.classList.add('popout');
+                btn.parentElement.classList.add('mb-4');
 
                 let grandparent = btn.parentElement.parentElement;
                 grandparent.getElementsByClassName('centered')[1].hidden = false;
@@ -380,7 +399,7 @@
                   </button>
             </div>
 
-            <div id='descr'>
+            <div id='descr' class='my-3'>
 
             </div>
 
@@ -394,25 +413,23 @@
                         <div class="alert alert-success fade show mt-3 mb-1" role="alert">
                             You successfully supported this initiative <strong>publicly!</strong>
                         </div>
-                        <button type="button" class="btn btn-danger" onclick=''>Unsupport</button>
                     </div>
                     <div class='centered mb-2' style="opacity: 0;" hidden>
                         <div class="alert alert-success fade show mt-3 mb-1" role="alert">
                             You successfully supported this initiative <strong>anonymously!</strong>
                         </div>
-                        <button type="button" class="btn btn-danger" onclick=''>Unsupport</button>
                     </div>
                 </div>
             </div>
 
             <div id='textSupport' hidden>
-                <div class="alert alert-success fade show mt-3 mb-1" role="alert">
+                <div class="alert alert-success fade show mt-3 mb-2" role="alert">
                     You support this initiative <strong>publicly!</strong>
                 </div>
             </div>
 
             <div id='textSupportAnon' hidden>
-                <div class="alert alert-success fade show mt-3 mb-1" role="alert">
+                <div class="alert alert-success fade show mt-3 mb-2" role="alert">
                     You support this initiative <strong>anonymously!</strong>
                 </div>
             </div>

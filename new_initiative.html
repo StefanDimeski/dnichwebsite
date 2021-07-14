@@ -59,8 +59,8 @@
                     imgSrcs.push(children[i].src);
                 }
 
-                initiatives.push({title: title, descr: descr, images: imgSrcs, anon: false});
-                currAcc.myInitiatives.push({title: title, descr: descr, images: imgSrcs, anon: false});
+                initiatives.push({title: title, descr: descr, images: imgSrcs, anon: false, deleted: false});
+                currAcc.myInitiatives.push({title: title, descr: descr, images: imgSrcs, anon: false, deleted: false});
 
                 localStorage.initiatives = JSON.stringify(initiatives);
                 localStorage.currAccount = JSON.stringify(currAcc);

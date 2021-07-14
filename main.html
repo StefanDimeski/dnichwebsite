@@ -23,6 +23,30 @@
                 var code = document.getElementById('template').innerHTML;
                 var initiativesDiv = document.getElementById('initiatives');
 
+                let num = 0;
+
+                for (i = 0; i < initiatives.length; i++) {
+                    console.log('initiative');
+                    if (initiatives[i].deleted == false) {
+                        console.log('not deleted');
+                        num += 1;
+                    }
+                }
+
+                console.log("Total initiatives: " + num);
+
+                if (num == 0) {
+                    let elem = document.createElement('h4');
+
+                    elem.innerHTML = 'There are no initiatives currently.';
+                    elem.classList.add('text-center');
+                    elem.classList.add('mt-4');
+
+                    document.getElementsByTagName('body')[0].appendChild(elem);
+
+                    return;
+                }
+
                 for (let i = 0; i < initiatives.length; i++) {
 
                     if (initiatives[i].deleted == true) {
@@ -118,7 +142,7 @@
                             }
 
                             localStorage.currAccount = JSON.stringify(currAcc);
-                            window.location.href = 'main - Copy.html';
+                            window.location.href = 'main.html';
                         }
                     }
 

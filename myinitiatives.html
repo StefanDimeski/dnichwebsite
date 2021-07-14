@@ -25,6 +25,25 @@
                 var code = document.getElementById('template').innerHTML;
                 var initiativesDiv = document.getElementById('initiatives');
 
+                let num = 0;
+
+                for (i = 0; i < initiatives.length; i++) {
+                    if (initiatives[i].deleted == false)
+                        num += 1;
+                }
+
+                if (num == 0) {
+                    let elem = document.createElement('h4');
+
+                    elem.innerHTML = "You don't own any initiatives currently.";
+                    elem.classList.add('text-center');
+                    elem.classList.add('mt-4');
+
+                    document.getElementsByTagName('body')[0].appendChild(elem);
+
+                    return;
+                }
+
                 for (let i = 0; i < initiatives.length; i++) {
 
                     if (initiatives[i].deleted == true) {
@@ -44,6 +63,8 @@
                     elem.getElementsByClassName('initiativeImg')[0].src = initiatives[i].images[0];
 
                     elem.getElementsByClassName('btnDelete')[0].onclick = function () {
+
+                        this.parentElement.classList.add('popout');
 
                         let grandparent = this.parentElement.parentElement;
                         grandparent.getElementsByClassName('centered')[0].hidden = false;
@@ -83,6 +104,12 @@
                         }
 
                         localStorage.initiatives = JSON.stringify(allInitiatives);
+
+                        setTimeout(function () {
+
+                            window.location.href = window.location.href;
+
+                        }, 1000);
                     }
 
                     initiativesDiv.appendChild(elem);
@@ -134,7 +161,7 @@
 
             .centered {
               position: absolute;
-              top: 50%;
+              top: 35%;
               left: 50%;
               transform: translate(-50%, -50%);
             }
@@ -213,20 +240,22 @@
         <div class='container'>
             <script id="template" type="text/html">
                 <div class='row'>
-                    <div class='row mt-3' style='border: 1px solid black;'>
+                    <div class='row mb-3' style='border: 1px solid black;'>
                         <div class='col-3 d-flex align-items-center p-0 my-2'>
                             <img class='initiativeImg' src='slika_pothole.jpg' width=310px height=220px>
                         </div>
-                        <div class='col-9 px-0'>
-                            <h3 class='title mt-2'></h3>
-                            <p class='descr'></p>
+                        <div class='col-9 px-0 d-flex flex-column justify-content-between'>
+                            <div>
+                                <h3 class='title mt-2'></h3>
+                                <p class='descr'></p>
+                            </div>
 
                             <div class='containerA'>
                                 <div class='mb-2'>
                                     <button type="button" class="btn btn-danger btnDelete">Delete initiative</button>
                                 </div>
                                 <div class='centered mb-2' style="opacity: 0;" hidden>
-                                    <div class="alert alert-success fade show mt-3 mb-1" role="alert">
+                                    <div class="alert alert-success fade show mt-3 mb-1 p-1" role="alert">
                                         You've successfully <strong>deleted</strong> this initiative!
                                     </div>
                                 </div>
