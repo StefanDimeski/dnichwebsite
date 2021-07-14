@@ -69,7 +69,7 @@
                 }
 
                 if (valid == true) {
-                    var newAcc = {name: name, surname: surname, email: email, id_num: id_num, password: pass};
+                    var newAcc = {name: name, surname: surname, email: email, id_num: id_num, password: pass, myInitiatives: [], supportedInitiatives: []};
 
                     var accounts = JSON.parse(localStorage.accounts);
                     accounts.push(newAcc);
