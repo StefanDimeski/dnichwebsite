@@ -51,6 +51,8 @@
 
                         let grandparent = this.parentElement.parentElement;
                         grandparent.getElementsByClassName('centered')[0].hidden = false;
+                        grandparent.getElementsByClassName('centered')[0].classList.add('d-flex');
+                        grandparent.getElementsByClassName('centered')[0].classList.add('flex-row');
                         grandparent.getElementsByClassName('centered')[0].classList.add('popup');
 
                         currAcc.supportedInitiatives.push(initiative);
@@ -67,6 +69,8 @@
 
                         let grandparent = this.parentElement.parentElement;
                         grandparent.getElementsByClassName('centered')[1].hidden = false;
+                        grandparent.getElementsByClassName('centered')[1].classList.add('d-flex');
+                        grandparent.getElementsByClassName('centered')[1].classList.add('flex-row');
                         grandparent.getElementsByClassName('centered')[1].classList.add('popup');
 
                         currAcc.supportedInitiatives.push(initiative);
@@ -95,6 +99,27 @@
 
                     if (supported == false) {
                         elem.getElementsByClassName('containerA')[0].hidden = false;
+                    }
+
+                    var unsupportBtns = elem.getElementsByClassName('btnUnsupport');
+
+                    for (k = 0; k < unsupportBtns.length; k++) {
+                        unsupportBtns[k].onclick = function () {
+                            let currAcc = JSON.parse(localStorage.currAccount);
+                            let initiative = initiatives[i];
+
+                            for (r = 0; r < currAcc.supportedInitiatives.length; r++) {
+                                if (initiative.title.localeCompare(currAcc.supportedInitiatives[r].title) == 0 &&
+                                    initiative.descr.localeCompare(currAcc.supportedInitiatives[r].descr) == 0) {
+
+                                    currAcc.supportedInitiatives.splice(r, 1);
+                                    break;
+                                }
+                            }
+
+                            localStorage.currAccount = JSON.stringify(currAcc);
+                            window.location.href = 'main - Copy.html';
+                        }
                     }
 
 
@@ -147,7 +172,7 @@
 
             .centered {
               position: absolute;
-              top: 50%;
+              top: 35%;
               left: 50%;
               transform: translate(-50%, -50%);
             }
@@ -230,38 +255,44 @@
                         <div class='col-3 d-flex align-items-center p-0 my-2'>
                             <img class='initiativeImg' src='slika_pothole.jpg' width=310px height=220px>
                         </div>
-                        <div class='col-9 px-0 d-flex flex-column'>
-                            <h3 class='title mt-2'></h3>
-                            <p class='descr'></p>
+                        <div class='col-9 px-0 d-flex flex-column justify-content-between'>
+                            <div>
+                                <h3 class='title mt-2'></h3>
+                                <p class='descr'></p>
+                            </div>
 
-                            <div class='containerA align-self-center' hidden>
+                            <div class='containerA' hidden>
                                 <div class='mb-2'>
                                     <button type="button" class="btn btn-danger buttonJoin">Join the initiative</button>
                                     <button type="button" class="btn btn-success buttonJoinAnon">Support the initiative anonymously</button>
                                 </div>
-                                <div class='centered mb-2' style="opacity: 0;" hidden>
-                                    <div class="alert alert-success fade show mt-3 mb-1" role="alert">
+                                <div class='centered mb-3' style="opacity: 0;" hidden>
+                                    <div class="alert alert-success fade show p-1 my-0" role="alert">
                                         You successfully supported this initiative <strong>publicly!</strong>
                                     </div>
-                                    <button type="button" class="btn btn-danger" onclick=''>Unsupport</button>
+                                    <button type="button" class="btn btn-danger btnUnsupport ms-2" onclick=''>Unsupport</button>
                                 </div>
-                                <div class='centered mb-2' style="opacity: 0;" hidden>
-                                    <div class="alert alert-success fade show mt-3 mb-1" role="alert">
+                                <div class='centered mb-3' style="opacity: 0;" hidden>
+                                    <div class="alert alert-success fade show p-0 my-0" role="alert">
                                         You successfully supported this initiative <strong>anonymously!</strong>
                                     </div>
-                                    <button type="button" class="btn btn-danger" onclick=''>Unsupport</button>
+                                    <button type="button" class="btn btn-danger btnUnsupport ms-2" onclick=''>Unsupport</button>
                                 </div>
                             </div>
-                            <div class='textSupport align-self-center' hidden>
-                                <div class="alert alert-success fade show mt-3 mb-1" role="alert">
+                            <div class='textSupport align-self-center mb-2' hidden>
+                                <span class="alert alert-success fade show mt-3 mb-1 p-2" role="alert">
                                     You support this initiative <strong>publicly!</strong>
-                                </div>
+                                </span>
+
+                                <button type="button" class="btn btn-danger ms-2 btnUnsupport" onclick=''>Unsupport</button>
                             </div>
 
-                            <div class='textSupportAnon align-self-center' hidden>
-                                <div class="alert alert-success fade show mt-3 mb-1" role="alert">
+                            <div class='textSupportAnon align-self-center mb-2' hidden>
+                                <span class="alert alert-success fade show mt-3 mb-1 p-2" role="alert">
                                     You support this initiative <strong>anonymously!</strong>
-                                </div>
+                                </span>
+
+                                <button type="button" class="btn btn-danger ms-2 btnUnsupport" onclick=''>Unsupport</button>
                             </div>
                         </div>
                     </div>
