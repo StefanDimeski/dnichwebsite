@@ -5,10 +5,13 @@
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
+        <script src="https://kit.fontawesome.com/0fa8ad8333.js" crossorigin="anonymous"></script>
+
 
        <script type="text/javascript">
             function getText() {
-                document.getElementById('name_field').innerHTML = localStorage.name;
+                var currAcc = JSON.parse(localStorage.currAccount);
+                document.getElementById('navbarDropdown').innerHTML = currAcc.name;
             }
 
             function picture() {
@@ -29,7 +32,7 @@
                     elem.src = reader.result;
                     elem.style.width = '200px';
                     elem.style.height = '100px';
-                    elem.className = 'mx-1 mb-1'
+                    elem.className = 'me-2 mb-2'
 
                     imgHolder.appendChild(elem);
                 };
@@ -95,24 +98,76 @@
                 window.location.href = path; 
             }
         </script>
+
+        <style>
+            .title:hover {
+                text-decoration: underline;
+                cursor: pointer;
+            }
+
+            .backbtn:hover {
+                cursor: pointer;
+                /*text-shadow: -1px -1px white;*/
+                text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+            }
+
+            .hover-pointer:hover {
+                cursor: pointer;
+            }
+        </style>
     </head>
 
 
     <body onload='getText()'>
-      <nav class="navbar navbar-light" style='background-color: #333333;'>
-            <div class="container-fluid">
-                <div class='d-flex align-items-center flex-row'>
-                    <a class="navbar-brand" style='color: #49C1CB; font-weight: bold; font-size: 2.0rem;' href="#">Initiativia</a>
-                    <button type='button' class='btn rounded-circle' style='background-color: #49C1CB; font-weight: bold; font-size: 2.0rem; transform: rotate(180deg);'>
-                        <div>
-                            &#10150;
-                        </div>
-                    </button>
+      <div class="modal fade" id="infoModal" tabindex="-1">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Information</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+              <div class="modal-body">
+                <div class='d-flex flex-column'>
+                    <div class='mb-2'>You can check out the other pages or log out by clicking on your username in the top right corner, as illustrated in the following image: </div>
+
+                    <img src='snip.png' class='ms-2 align-self-center' style='border: 2px solid black;'>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <nav class="navbar navbar-expand mb-3" style='background-color: #333333;'>
+            <div class='container-fluid'>  
                 <div>
-                    <a href='register.html'>
-                        <button type="button" id='name_field' class="btn btn-primary" style='background-color: #49C1CB; color: black; border-color: #49C1CB;'>Placeholder</button>
-                    </a>
+                    <div class='d-flex align-items-center flex-row'>
+                        <i class="fas fa-arrow-circle-left fa-3x backbtn" onclick='backBtn()' style='color: #49C1CB;'></i>
+                        <a class="navbar-brand ms-3" style='color: #49C1CB; font-weight: bold; font-size: 2.0rem;' href="#">Initiativia</a>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="navbar-nav mr-auto">
+                        <div class='d-flex flex-row align-items-center'>
+                            <i class="fas fa-info-circle fa-2x me-2 hover-pointer" data-bs-toggle="modal" data-bs-target="#infoModal" style='color: #49C1CB;'></i>
+                            <a href='new_initiative.html'>
+                            <button type="button" class="btn btn-primary me-2" style='background-color: #49C1CB; color: black; border-color: #49C1CB;'>Start a new initiative</button>
+                            </a>
+                            <div class="nav-item dropdown">
+                              <a class="nav-link dropdown-toggle btn btn-primary" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" style="background-color: #49C1CB; color: black; border-color: #49C1CB; font-weight: bold;">
+                                Dropdown
+                              </a>
+
+                              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item active" href="">All initiatives</a></li>
+                                <li><a class="dropdown-item" href="initiatives_i_support.html">Initiatives I support</a></li>
+                                <li><a class="dropdown-item" href="myinitiatives.html">My initiatives</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" onclick='logout()'>Log out</a></li>
+                              </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -120,17 +175,18 @@
         <div class='container-fluid ml-3'>
             <div class='row'>
                 <div class='col-9'>
-                    <div class='row'>
+                    <div class='row mt-2'>
                         <div style='color: #49C1CB; font-weight: bold; font-size: 2.0rem;'>Start a new initiative</div>
                     </div>
-                    <div class='row'>
+                    <div class='row mt-2'>
                         <div class='d-flex align-items-center flex-row w-100'>
                             <input type="email" class="form-control w-50" id="initiative_title_field" placeholder="Title">
-                            <div class='ml-2'>Title must be between 10 and 25 characters.</div>
+                            <div class='ms-3'>Title must be between 10 and 25 characters.</div>
                         </div>
-                        <!--<input type="email" class="form-control" id="initiative_descr_field" placeholder="Describe your initiative">-->
 
-                        <textarea class='form-control mt-2 w-50 mb-3' id='initiative_descr_field' rows = "5" cols = "60" placeholder="Describe your initiative" style='resize: none;'></textarea>
+                        <div class='d-flex align-items-center flex-row w-100'>
+                            <textarea class='form-control mt-2 w-50 mb-3' id='initiative_descr_field' rows = "5" cols = "60" placeholder="Describe your initiative" style='resize: none;' maxlength="470"></textarea>
+                        </div>
                     </div>
                     <div class='row'>
                         <div id='imgPreviewsHolder'>
@@ -140,15 +196,16 @@
                         <div class='d-flex align-items-center flex-row'>
                             <label class="btn btn-primary m-0">+ Add image<input type="file" id='inpFile' name="img" accept="image/*" onchange="picture()"hidden></label>
 
-                            <div class='ml-2'>File sizes of 32MB or less.</div>
+                            <div class='ms-2'>File sizes of 32MB or less.</div>
                         </div>
                     </div>
                     <div class='row mt-3'>
-                        <button type='button' class='btn btn-danger mr-2' onclick='startInitiative()'>Start initiative</button>
-                        <button type='button' class='btn btn-success' onclick='startInitiativeAnon()'>Start initiative anonymously</button>
+                        <div class='d-flex flex-row'>
+                            <button type='button' class='btn btn-danger me-2' onclick='startInitiative()'>Start initiative</button>
+                            <button type='button' class='btn btn-success' onclick='startInitiativeAnon()'>Start initiative anonymously</button>
+                        </div>
                     </div>
 
-                    <img id='testid'>
                 </div>
                 <div class='col-3' style='border: 0px solid black; border-left-width: 2px;'>
                     <h2 class='mt-2'>Tips:</h2>

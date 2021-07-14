@@ -5,6 +5,8 @@
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
+        <script src="https://kit.fontawesome.com/0fa8ad8333.js" crossorigin="anonymous"></script>
+
          <script type="text/javascript">
             function init() {
                 getText();
@@ -132,34 +134,72 @@
               left: 50%;
               transform: translate(-50%, -50%);
             }
+
+            .title:hover {
+                text-decoration: underline;
+                cursor: pointer;
+            }
+
+            .backbtn:hover {
+                cursor: pointer;
+                /*text-shadow: -1px -1px white;*/
+                text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+            }
+
+            .hover-pointer:hover {
+                cursor: pointer;
+            }
         </style>
 
     </head>
     <body onload='init()'>
-        <nav class="navbar navbar-expand" style='background-color: #333333;'>
+        <div class="modal fade" id="infoModal" tabindex="-1">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Information</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+              <div class="modal-body">
+                <div class='d-flex flex-column'>
+                    <div class='mb-2'>You can check out the other pages or log out by clicking on your username in the top right corner, as illustrated in the following image: </div>
+
+                    <img src='snip.png' class='ms-2 align-self-center' style='border: 2px solid black;'>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <nav class="navbar navbar-expand mb-3" style='background-color: #333333;'>
             <div class='container-fluid'>  
                 <div>
-                    <a class="navbar-brand" style='color: #49C1CB; font-weight: bold; font-size: 2.0rem;' href="#">Initiativia</a>
-                    <button type='button' class='btn btn-primary' onclick="backBtn()">Back</button>
+                    <div class='d-flex align-items-center flex-row'>
+                        <i class="fas fa-arrow-circle-left fa-3x backbtn" onclick='backBtn()' style='color: #49C1CB;'></i>
+                        <a class="navbar-brand ms-3" style='color: #49C1CB; font-weight: bold; font-size: 2.0rem;' href="#">Initiativia</a>
+                    </div>
                 </div>
 
                 <div>
-
                     <div class="navbar-nav mr-auto">
-                        <a href='new_initiative.html'>
-                        <button type="button" class="btn btn-primary" style='background-color: #49C1CB; color: black; border-color: #49C1CB;'>Start a new initiative</button>
-                        </a>
-                        <div class="nav-item dropdown">
-                          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Dropdown
-                          </a>
-                          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="main.html">All initiatives</a></li>
-                            <li><a class="dropdown-item active" href="">Initiatives I support</a></li>
-                            <li><a class="dropdown-item" href="myInitiatives.html">My initiatives</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Log out</a></li>
-                          </ul>
+                        <div class='d-flex flex-row align-items-center'>
+                            <i class="fas fa-info-circle fa-2x me-2 hover-pointer" data-bs-toggle="modal" data-bs-target="#infoModal" style='color: #49C1CB;'></i>
+                            <a href='new_initiative.html'>
+                            <button type="button" class="btn btn-primary me-2" style='background-color: #49C1CB; color: black; border-color: #49C1CB;'>Start a new initiative</button>
+                            </a>
+                            <div class="nav-item dropdown">
+                              <a class="nav-link dropdown-toggle btn btn-primary" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" style="background-color: #49C1CB; color: black; border-color: #49C1CB; font-weight: bold;">
+                                Dropdown
+                              </a>
+
+                              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="main.html">All initiatives</a></li>
+                                <li><a class="dropdown-item active" href="">Initiatives I support</a></li>
+                                <li><a class="dropdown-item" href="myinitiatives.html">My initiatives</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" onclick='logout()'>Log out</a></li>
+                              </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
