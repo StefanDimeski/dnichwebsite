@@ -8,6 +8,31 @@
         <script src="https://kit.fontawesome.com/0fa8ad8333.js" crossorigin="anonymous"></script>
 
         <script type="text/javascript">
+            function validateEmail(email) {
+                var re = /^\S+@\S+\.\S+$/;
+                return re.test(email);
+            }
+
+            function validateName(name) {
+                var re = /^[A-Z][a-z]+$/
+                return re.test(name);
+            }
+
+            function validateIDNum(id) {
+                var re = /^[0-9]+$/
+                return re.test(id);
+            }
+
+            function validatePassword(pass) {
+
+                if (pass.length < 8) {
+                    return false;
+                }
+
+                var re = /^\S*[A-Z]\S*$/
+                return re.test(pass);
+            }
+
             function saveData() {
                 name = document.getElementById('name_field').value;
                 surname = document.getElementById('surname_field').value;
@@ -15,14 +40,50 @@
                 id_num = document.getElementById('id_num_field').value;
                 pass = document.getElementById('pass_field').value;
 
-                var newAcc = {name: name, surname: surname, email: email, id_num: id_num, password: pass};
+                // Check validity of data
+                var valid = true;
 
-                var accounts = JSON.parse(localStorage.accounts);
-                accounts.push(newAcc);
+                if (validateEmail(email) == false) {
+                    document.getElementById('errormsg').children[0].innerHTML = 'Invalid email! It must be of form text@text.text';
+                    valid = false;
+                } 
 
-                localStorage.accounts = JSON.stringify(accounts);
+                if (validateName(name) == false) {
+                    document.getElementById('errormsg').children[0].innerHTML = 'Invalid name! It can only contain letters of the alphabet and must begin with an uppercase letter.';
+                    valid = false;
+                }
 
-                localStorage.currAccount = JSON.stringify(accounts[accounts.length - 1]);
+                if (validateName(surname) == false) {
+                    document.getElementById('errormsg').children[0].innerHTML = 'Invalid surname! It can only contain letters of the alphabet and must begin with an uppercase letter.';
+                    valid = false;
+                } 
+
+                if (validateIDNum(id_num) == false) {
+                    document.getElementById('errormsg').children[0].innerHTML = 'Invalid ID number! It can only contain numbers.';
+                    valid = false;
+                }
+
+                if (validatePassword(pass) == false) {
+                    document.getElementById('errormsg').children[0].innerHTML = 'Invalid password! It must contain minimum 8 characters and one uppercase letter.';
+                    valid = false;
+                }
+
+                if (valid == true) {
+                    var newAcc = {name: name, surname: surname, email: email, id_num: id_num, password: pass};
+
+                    var accounts = JSON.parse(localStorage.accounts);
+                    accounts.push(newAcc);
+
+                    localStorage.accounts = JSON.stringify(accounts);
+
+                    localStorage.currAccount = JSON.stringify(accounts[accounts.length - 1]);
+
+                    window.location.href = 'main.html';
+                } else {
+
+                    document.getElementById('errormsg');
+                    showError2();
+                }
             }
 
             function checkLogged() {
@@ -36,9 +97,30 @@
             function backBtn() {
                 window.location.href = 'intro.html';
             }
+
+            function showError2() {
+                document.getElementById('errormsg').classList.add('popup');
+            }
         </script>
 
         <style>
+
+            @keyframes fadeIn {
+                0% {max-height: 0px; padding: 0rem 0rem;}
+                100% {max-height: 80px; padding: 1rem 1rem;}
+            }
+
+            .popup {
+                -webkit-animation: fadeIn 2s forwards;
+                animation: fadeIn 0.5s forwards;
+
+                border: 2px solid darkred;
+            }
+
+            .errormessage {
+                max-height: 0px;
+                overflow: hidden;
+            }
 
             .backbtn:hover {
                 cursor: pointer;
@@ -73,15 +155,18 @@
                     <div class='d-flex flex-column justify-content-center align-items-center'>
                         <a class='my-1' style='text-decoration: none; color: #49C1CB; font-weight: bold; font-size: 2.0rem;' href="intro.html">Initiativia</a>
                         <div style='width: 80%'>
+
+                            <div class="errormessage alert alert-danger m-0 p-0" style='border: none;' id='errormsg' role="alert">
+                                <div class='ms-2 me-2'>Wrong email or password!</div>
+                            </div>
+
                             <input type="email" class="form-control my-1" id="name_field" placeholder="Name">
                             <input type="email" class="form-control mb-1" id="surname_field" placeholder="Surname">
                             <input type="email" class="form-control mb-1" id="email_field" placeholder="E-mail">
                             <input type="email" class="form-control mb-1" id="id_num_field" placeholder="ID number">
                             <input type="password" class="form-control mb-1" id="pass_field" placeholder="Password">
                         </div>
-                        <a href='main.html' onclick='saveData()' class='mb-1'>
-                            <button type="button" class="btn btn-primary text-light" style='background-color: #49C1CB; color: black; border-color: #49C1CB;'>Register</button>
-                        </a>
+                        <button type="button" class="btn btn-primary text-light mb-1" onclick='saveData()' style='background-color: #49C1CB; color: black; border-color: #49C1CB;'>Register</button>
                     </div>
                 </div>
             </div>
