@@ -5,6 +5,44 @@
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
+        <style>
+            @keyframes fadeIn {
+                0% {opacity: 0;}
+                100% {opacity: 1;}
+            }
+
+            @keyframes fadeOut {
+                0% {opacity: 1;}
+                100% {opacity: 0;}
+            }
+
+            .popup {
+                -webkit-animation: fadeIn 2s forwards;
+                animation: fadeIn 0.5s forwards;
+            }
+
+            .popout {
+                -webkit-animation: fadeOut 2s forwards;
+                animation: fadeOut 0.5s forwards;
+            }
+
+            .errormessage {
+                height: 0px;
+                overflow: hidden;
+            }
+
+            .containerA {
+              position: relative;
+            }
+
+            .centered {
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+            }
+        </style>
+
 
         <script type="text/javascript">
             function getParameterByName(name, url = window.location.href) {
@@ -96,6 +134,8 @@
                             document.getElementById('textSupport').hidden = false;
                         }
 
+                        document.getElementById('btnUnsupport').hidden = false;
+
                         supported = true;
                         break;
                     }
@@ -104,6 +144,116 @@
                 if (supported == false) {
                     document.getElementById('joinSupport').hidden = false;
                 }
+
+                var myInitiatives = JSON.parse(localStorage.currAccount).myInitiatives;
+
+                for (i=0; i < myInitiatives.length; i++) {
+                    if (initiatives[currIni].title.localeCompare(myInitiatives[i].title) == 0 &&
+                        initiatives[currIni].descr.localeCompare(myInitiatives[i].descr) == 0) {
+
+                        document.getElementById('btnDelete').hidden = false;
+                        break;
+                    }
+                }
+            }
+
+            function unsupport(pressedBtn) {
+                var currIni = getParameterByName('num');
+                var initiatives = JSON.parse(localStorage.initiatives);
+
+                let currAcc = JSON.parse(localStorage.currAccount);
+
+                for (i = 0; i < currAcc.supportedInitiatives.length; i++) {
+                    if (initiatives[currIni].title.localeCompare(currAcc.supportedInitiatives[i].title) == 0 &&
+                        initiatives[currIni].descr.localeCompare(currAcc.supportedInitiatives[i].descr) == 0) {
+
+                        currAcc.supportedInitiatives.splice(i, 1);
+                        break;
+                    }
+                }
+
+                localStorage.currAccount = JSON.stringify(currAcc);
+
+                pressedBtn.parentElement.classList.add('popout');
+
+                let grandparent = pressedBtn.parentElement.parentElement;
+                grandparent.getElementsByClassName('centered')[0].hidden = false;
+                grandparent.getElementsByClassName('centered')[0].classList.add('popup');
+            }
+
+            function delet(pressedBtn) {
+                var currIni = getParameterByName('num');
+                let allInitiatives = JSON.parse(localStorage.initiatives);
+
+                pressedBtn.parentElement.classList.add('popout');
+
+                let grandparent = pressedBtn.parentElement.parentElement;
+                grandparent.getElementsByClassName('centered')[0].hidden = false;
+                grandparent.getElementsByClassName('centered')[0].classList.add('popup');
+
+                //---------------
+
+                let initiative = allInitiatives[currIni];
+
+                let currAcc = JSON.parse(localStorage.currAccount);
+
+                for (i = 0; i < currAcc.myInitiatives.length; i++) {
+                    if (initiative.title.localeCompare(currAcc.myInitiatives[i].title) == 0 &&
+                        initiative.descr.localeCompare(currAcc.myInitiatives[i].descr) == 0) {
+
+                        currAcc.myInitiatives[i].deleted = true;
+                    }
+                }
+
+                localStorage.currAccount = JSON.stringify(currAcc);
+
+                for (i = 0; i < allInitiatives.length; i++) {
+                    if (initiative.title.localeCompare(allInitiatives[i].title) == 0 &&
+                        initiative.descr.localeCompare(allInitiatives[i].descr) == 0) {
+
+                        allInitiatives[i].deleted = true;
+                    }
+                }
+
+                localStorage.initiatives = JSON.stringify(allInitiatives);
+            }
+
+            function join(btn) {
+                var currIni = getParameterByName('num');
+                let initiatives = JSON.parse(localStorage.initiatives);
+
+                let currAcc = JSON.parse(localStorage.currAccount);
+                let initiative = initiatives[i];
+
+                initiative.anon = false;
+
+                btn.parentElement.classList.add('popout');
+
+                let grandparent = btn.parentElement.parentElement;
+                grandparent.getElementsByClassName('centered')[0].hidden = false;
+                grandparent.getElementsByClassName('centered')[0].classList.add('popup');
+
+                currAcc.supportedInitiatives.push(initiative);
+                localStorage.currAccount = JSON.stringify(currAcc);
+            }
+
+            function joinAnon(btn) {
+                var currIni = getParameterByName('num');
+                let initiatives = JSON.parse(localStorage.initiatives);
+
+                let currAcc = JSON.parse(localStorage.currAccount);
+                let initiative = initiatives[i];
+
+                initiative.anon = true;
+
+                btn.parentElement.classList.add('popout');
+
+                let grandparent = btn.parentElement.parentElement;
+                grandparent.getElementsByClassName('centered')[1].hidden = false;
+                grandparent.getElementsByClassName('centered')[1].classList.add('popup');
+
+                currAcc.supportedInitiatives.push(initiative);
+                localStorage.currAccount = JSON.stringify(currAcc);
             }
 
         </script>
@@ -195,8 +345,24 @@
             </div>
 
             <div id='joinSupport' hidden>
-                <button type="button" class="btn btn-danger">Join the initiative</button>
-                <button type="button" class="btn btn-success" >Support the initiative anonymously</button>
+                <div class='containerA'>
+                    <div class='mb-2'>
+                        <button type="button" class="btn btn-danger" onclick="join(this)">Join the initiative</button>
+                        <button type="button" class="btn btn-success" onclick="joinAnon(this)">Support the initiative anonymously</button>
+                    </div>
+                    <div class='centered mb-2' style="opacity: 0;" hidden>
+                        <div class="alert alert-success fade show mt-3 mb-1" role="alert">
+                            You successfully supported this initiative <strong>publicly!</strong>
+                        </div>
+                        <button type="button" class="btn btn-danger" onclick=''>Unsupport</button>
+                    </div>
+                    <div class='centered mb-2' style="opacity: 0;" hidden>
+                        <div class="alert alert-success fade show mt-3 mb-1" role="alert">
+                            You successfully supported this initiative <strong>anonymously!</strong>
+                        </div>
+                        <button type="button" class="btn btn-danger" onclick=''>Unsupport</button>
+                    </div>
+                </div>
             </div>
 
             <div id='textSupport' hidden>
@@ -208,6 +374,28 @@
             <div id='textSupportAnon' hidden>
                 <div class="alert alert-success fade show mt-3 mb-1" role="alert">
                     You support this initiative <strong>anonymously!</strong>
+                </div>
+            </div>
+
+            <div id='btnUnsupport' class='containerA' hidden>
+                <div class='mb-2'>
+                    <button type="button" class="btn btn-danger btnUnsupport" onclick="unsupport(this)">Unsupport</button>
+                </div>
+                <div class='centered mb-2' style="opacity: 0;" hidden>
+                    <div class="alert alert-success fade show mt-3 mb-1" role="alert">
+                        You successfully <strong>unsupported</strong> this initiative!
+                    </div>
+                </div>
+            </div>
+
+            <div id='btnDelete' class='containerA' hidden>
+                <div class='mb-2'>
+                    <button type="button" class="btn btn-danger btnDelete" onclick="delet(this)">Delete</button>
+                </div>
+                <div class='centered mb-2' style="opacity: 0;" hidden>
+                    <div class="alert alert-success fade show mt-3 mb-1" role="alert">
+                        You successfully <strong>deleted</strong> this initiative!
+                    </div>
                 </div>
             </div>
         </div>

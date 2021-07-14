@@ -105,6 +105,10 @@
 
                 window.location.href = 'intro.html';
             }
+
+            function backBtn() {
+                window.history.back();
+            }
         </script>
 
         <style>
@@ -153,7 +157,7 @@
             <div class='container-fluid'>  
                 <div>
                     <a class="navbar-brand" style='color: #49C1CB; font-weight: bold; font-size: 2.0rem;' href="#">Initiativia</a>
-                    <button type='button' class='btn btn-primary'>Back</button>
+                    <button type='button' class='btn btn-primary' onclick="backBtn()">Back</button>
                 </div>
 
                 <div>

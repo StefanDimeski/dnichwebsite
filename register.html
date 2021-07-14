@@ -23,11 +23,19 @@
 
                 localStorage.currAccount = JSON.stringify(accounts[accounts.length - 1]);
             }
+
+            function checkLogged() {
+                var currAcc = JSON.parse(localStorage.currAccount);
+
+                if (currAcc != null) {
+                    window.history.forward();
+                }
+            }
         </script>
     </head>
 
 
-    <body>
+    <body onload='checkLogged()'>
         <!--<nav class="navbar navbar-light" style='background-color: #333333;'>
             <div class="container-fluid">
                 <a class="navbar-brand" style='color: #49C1CB; font-weight: bold; font-size: 2.0rem;' href="#">Initiativia</a>

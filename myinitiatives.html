@@ -62,6 +62,14 @@
                             }
                         }
 
+                        for (i = 0; i < currAcc.supportedInitiatives.length; i++) {
+                            if (initiative.title.localeCompare(currAcc.supportedInitiatives[i].title) == 0 &&
+                                initiative.descr.localeCompare(currAcc.supportedInitiatives[i].descr) == 0) {
+
+                                currAcc.supportedInitiatives[i].deleted = true;
+                            }
+                        }
+
                         localStorage.currAccount = JSON.stringify(currAcc);
 
                         for (i = 0; i < allInitiatives.length; i++) {
@@ -83,6 +91,10 @@
                 localStorage.currAccount = null;
 
                 window.location.href = 'intro.html';
+            }
+
+            function backBtn() {
+                window.history.back();
             }
         </script>
 
@@ -132,7 +144,7 @@
             <div class='container-fluid'>  
                 <div>
                     <a class="navbar-brand" style='color: #49C1CB; font-weight: bold; font-size: 2.0rem;' href="#">Initiativia</a>
-                    <button type='button' class='btn btn-primary'>Back</button>
+                    <button type='button' class='btn btn-primary' onclick="backBtn()">Back</button>
                 </div>
 
                 <div>
