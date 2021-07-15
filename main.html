@@ -152,6 +152,23 @@
             }
 
             function logout() {
+                let accounts = JSON.parse(localStorage.accounts);
+                let currAccount = JSON.parse(localStorage.currAccount);
+
+                for (i = 0; i < accounts.length; i++) {
+                    if (accounts[i].name.localeCompare(currAccount.name) == 0 && 
+                        accounts[i].surname.localeCompare(currAccount.surname) == 0 &&
+                        accounts[i].email.localeCompare(currAccount.email) == 0 &&
+                        accounts[i].id_num.localeCompare(currAccount.id_num) == 0 &&
+                        accounts[i].password.localeCompare(currAccount.password) == 0) {
+
+                        accounts[i] = currAccount;
+                        break;
+                    }
+                }
+
+                localStorage.accounts = JSON.stringify(accounts);
+
                 localStorage.currAccount = null;
 
                 window.location.href = 'intro.html';
@@ -242,7 +259,7 @@
                 <div>
                     <div class='d-flex align-items-center flex-row'>
                         <i class="fas fa-arrow-circle-left fa-3x backbtn" onclick='backBtn()' style='color: #49C1CB;'></i>
-                        <a class="navbar-brand ms-3" style='color: #49C1CB; font-weight: bold; font-size: 2.0rem;' href="#">Initiativia</a>
+                        <a class="navbar-brand ms-3" style='color: #49C1CB; font-weight: bold; font-size: 2.0rem;' href="main.html">Initiativia</a>
                     </div>
                 </div>
 
@@ -276,47 +293,49 @@
             <script id="template" type="text/html">
                 <div class='row'>
                     <div class='row mb-3' style='border: 1px solid black;'>
-                        <div class='col-3 d-flex align-items-center p-0 my-2'>
-                            <img class='initiativeImg' src='slika_pothole.jpg' width=310px height=220px>
-                        </div>
-                        <div class='col-9 px-0 d-flex flex-column justify-content-between'>
-                            <div>
-                                <h3 class='title mt-2'></h3>
-                                <p class='descr'></p>
+                        <div class='d-flex flex-row p-0'>
+                            <div class='d-flex align-items-center p-0 my-2'>
+                                <img class='initiativeImg' src='slika_pothole.jpg' width=310px height=220px>
                             </div>
-
-                            <div class='containerA' hidden>
-                                <div class='mb-2'>
-                                    <button type="button" class="btn btn-danger buttonJoin">Join the initiative</button>
-                                    <button type="button" class="btn btn-success buttonJoinAnon">Support the initiative anonymously</button>
+                            <div class='px-0 d-flex flex-column justify-content-between ms-3'>
+                                <div>
+                                    <h3 class='title mt-2'></h3>
+                                    <p class='descr'></p>
                                 </div>
-                                <div class='centered mb-3' style="opacity: 0;" hidden>
-                                    <div class="alert alert-success fade show p-1 my-0" role="alert">
-                                        You successfully supported this initiative <strong>publicly!</strong>
+
+                                <div class='containerA' hidden>
+                                    <div class='mb-2'>
+                                        <button type="button" class="btn btn-danger buttonJoin">Join the initiative</button>
+                                        <button type="button" class="btn btn-success buttonJoinAnon">Support the initiative anonymously</button>
                                     </div>
-                                    <button type="button" class="btn btn-danger btnUnsupport ms-2" onclick=''>Unsupport</button>
-                                </div>
-                                <div class='centered mb-3' style="opacity: 0;" hidden>
-                                    <div class="alert alert-success fade show p-0 my-0" role="alert">
-                                        You successfully supported this initiative <strong>anonymously!</strong>
+                                    <div class='centered mb-3' style="opacity: 0;" hidden>
+                                        <div class="alert alert-success fade show p-0 my-0" role="alert">
+                                            You successfully supported this initiative <strong>publicly!</strong>
+                                        </div>
+                                        <button type="button" class="btn btn-danger btnUnsupport ms-2" onclick=''>Unsupport</button>
                                     </div>
-                                    <button type="button" class="btn btn-danger btnUnsupport ms-2" onclick=''>Unsupport</button>
+                                    <div class='centered mb-3' style="opacity: 0;" hidden>
+                                        <div class="alert alert-success fade show p-0 my-0" role="alert">
+                                            You successfully supported this initiative <strong>anonymously!</strong>
+                                        </div>
+                                        <button type="button" class="btn btn-danger btnUnsupport ms-2" onclick=''>Unsupport</button>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='textSupport align-self-center mb-2' hidden>
-                                <span class="alert alert-success fade show mt-3 mb-1 p-2" role="alert">
-                                    You support this initiative <strong>publicly!</strong>
-                                </span>
+                                <div class='textSupport align-self-center mb-2' hidden>
+                                    <span class="alert alert-success fade show mt-3 mb-1 p-2" role="alert">
+                                        You support this initiative <strong>publicly!</strong>
+                                    </span>
 
-                                <button type="button" class="btn btn-danger ms-2 btnUnsupport" onclick=''>Unsupport</button>
-                            </div>
+                                    <button type="button" class="btn btn-danger ms-2 btnUnsupport" onclick=''>Unsupport</button>
+                                </div>
 
-                            <div class='textSupportAnon align-self-center mb-2' hidden>
-                                <span class="alert alert-success fade show mt-3 mb-1 p-2" role="alert">
-                                    You support this initiative <strong>anonymously!</strong>
-                                </span>
+                                <div class='textSupportAnon align-self-center mb-2' hidden>
+                                    <span class="alert alert-success fade show mt-3 mb-1 p-2" role="alert">
+                                        You support this initiative <strong>anonymously!</strong>
+                                    </span>
 
-                                <button type="button" class="btn btn-danger ms-2 btnUnsupport" onclick=''>Unsupport</button>
+                                    <button type="button" class="btn btn-danger ms-2 btnUnsupport" onclick=''>Unsupport</button>
+                                </div>
                             </div>
                         </div>
                     </div>

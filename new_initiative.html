@@ -97,6 +97,33 @@
 
                 window.location.href = path; 
             }
+
+            function logout() {
+                let accounts = JSON.parse(localStorage.accounts);
+                let currAccount = JSON.parse(localStorage.currAccount);
+
+                for (i = 0; i < accounts.length; i++) {
+                    if (accounts[i].name.localeCompare(currAccount.name) == 0 && 
+                        accounts[i].surname.localeCompare(currAccount.surname) == 0 &&
+                        accounts[i].email.localeCompare(currAccount.email) == 0 &&
+                        accounts[i].id_num.localeCompare(currAccount.id_num) == 0 &&
+                        accounts[i].password.localeCompare(currAccount.password) == 0) {
+
+                        accounts[i] = currAccount;
+                        break;
+                    }
+                }
+
+                localStorage.accounts = JSON.stringify(accounts);
+
+                localStorage.currAccount = null;
+
+                window.location.href = 'intro.html';
+            }
+
+            function backBtn() {
+                window.history.back();
+            }
         </script>
 
         <style>
@@ -142,7 +169,7 @@
                 <div>
                     <div class='d-flex align-items-center flex-row'>
                         <i class="fas fa-arrow-circle-left fa-3x backbtn" onclick='backBtn()' style='color: #49C1CB;'></i>
-                        <a class="navbar-brand ms-3" style='color: #49C1CB; font-weight: bold; font-size: 2.0rem;' href="#">Initiativia</a>
+                        <a class="navbar-brand ms-3" style='color: #49C1CB; font-weight: bold; font-size: 2.0rem;' href="main.html">Initiativia</a>
                     </div>
                 </div>
 
@@ -159,7 +186,7 @@
                               </a>
 
                               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item active" href="">All initiatives</a></li>
+                                <li><a class="dropdown-item" href="main.html">All initiatives</a></li>
                                 <li><a class="dropdown-item" href="initiatives_i_support.html">Initiatives I support</a></li>
                                 <li><a class="dropdown-item" href="myinitiatives.html">My initiatives</a></li>
                                 <li><hr class="dropdown-divider"></li>
